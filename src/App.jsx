@@ -1,122 +1,82 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import TopBar from './components/layout/TopBar'
+import MenuBar from './components/layout/MenuBar'
+import ActivityBar from './components/layout/ActivityBar'
+import Sidebar from './components/layout/Sidebar'
+import TabBar from './components/layout/TabBar'
+import StatusBar from './components/layout/StatusBar'
+import Home from './components/sections/Home'
+import About from './components/sections/About'
+import Projects from './components/sections/Projects'
+import Skills from './components/sections/Skills'
+import Experience from './components/sections/Experience'
+import Contact from './components/sections/Contact'
+import ReadMe from './components/sections/ReadMe'
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+const SECTIONS = {
+  'home.tsx': <Home />,
+  'about.tsx': <About />,
+  'projects.tsx': <Projects />,
+  'skills.json': <Skills />,
+  'experience.ts': <Experience />,
+  'contact.tsx': <Contact />,
+  'README.md': <ReadMe />,
 }
 
-export default App
+
+
+export default function App() {
+  const [activeFile, setActiveFile] = useState('home.tsx')
+  const [openTabs, setOpenTabs] = useState(['home.tsx'])
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+
+  function openFile(file) {
+    if (!openTabs.includes(file)) {
+      setOpenTabs([...openTabs, file])
+    }
+    setActiveFile(file)
+  }
+
+  function closeTab(file, e) {
+    e.stopPropagation()
+    const newTabs = openTabs.filter(t => t !== file)
+    setOpenTabs(newTabs)
+    if (activeFile === file) {
+      setActiveFile(newTabs[newTabs.length - 1] || 'home.tsx')
+    }
+  }
+
+  return (
+    <div className="ide-container">
+      <TopBar />
+      <MenuBar />
+      <div className="ide-body">
+        <ActivityBar onExplorerClick={() => setSidebarOpen(s => !s)} />
+        <Sidebar
+          activeFile={activeFile}
+          onFileClick={openFile}
+          isOpen={sidebarOpen}
+        />
+        <div className="editor-area">
+          <TabBar
+            tabs={openTabs}
+            activeTab={activeFile}
+            onTabClick={openFile}
+            onTabClose={closeTab}
+          />
+          <div className="breadcrumb">
+            <span>jordan-wood</span>
+            <span className="breadcrumb__sep">›</span>
+            <span>src</span>
+            <span className="breadcrumb__sep">›</span>
+            <span style={{ color: 'var(--accent)' }}>{activeFile}</span>
+          </div>
+          <div className="editor-content">
+            {SECTIONS[activeFile]}
+          </div>
+        </div>
+      </div>
+      <StatusBar activeFile={activeFile} />
+    </div>
+  )
+}

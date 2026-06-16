@@ -1,0 +1,92 @@
+/* ── Syntax Highlighting Tokens ── */
+
+.token-keyword    { color: var(--syntax-blue);    }
+.token-string     { color: var(--syntax-orange);  }
+.token-function   { color: var(--syntax-yellow);  }
+.token-variable   { color: var(--text-primary);   }
+.token-comment    { color: var(--syntax-comment); font-style: italic; }
+.token-property   { color: var(--syntax-green);   }
+.token-value      { color: var(--syntax-purple);  }
+.token-number     { color: var(--syntax-green);   }
+.token-operator   { color: var(--text-primary);   }
+.token-punctuation{ color: var(--text-secondary); }
+
+/* ── Code Block Layout ── */
+.code-block {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.8;
+  display: flex;
+  gap: 24px;
+}
+
+.code-block__lines {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  user-select: none;
+  min-width: 32px;
+  padding-top: 2px;
+}
+
+.code-block__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.code-line {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  min-height: 1.8em;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.code-line:hover {
+  background: var(--bg-hover);
+}
+
+.code-line--highlighted {
+  background: var(--accent-dim);
+  border-left: 2px solid var(--accent);
+}
+
+/* ── Inline elements ── */
+.code-indent-1 { padding-left: 1.5rem; }
+.code-indent-2 { padding-left: 3rem;   }
+.code-indent-3 { padding-left: 4.5rem; }
+
+/* ── Cursor ── */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent);
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-start infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Comment block style (used in About) ── */
+.comment-block {
+  color: var(--syntax-comment);
+  font-style: italic;
+  line-height: 2;
+}
+
+/* ── JSON style (used in Skills) ── */
+.json-key     { color: var(--syntax-blue);   }
+.json-string  { color: var(--syntax-orange); }
+.json-number  { color: var(--syntax-green);  }
+.json-boolean { color: var(--syntax-purple); }
+.json-bracket { color: var(--text-secondary);}

@@ -1,0 +1,88 @@
+/* ── Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+  /* Background layers */
+  --bg-primary:    #1e1e1e;   /* main editor bg — VS Code dark */
+  --bg-secondary:  #252526;   /* sidebar bg */
+  --bg-tertiary:   #2d2d2d;   /* tab bar, inactive tabs */
+  --bg-hover:      #2a2d2e;   /* hover state */
+  --bg-active:     #1e1e1e;   /* active tab / selected file */
+
+  /* Electric blue accent */
+  --accent:        #4fc3f7;   /* primary accent — electric blue */
+  --accent-dim:    #1a3a4a;   /* accent background tint */
+  --accent-glow:   #4fc3f780; /* accent with opacity for glows */
+
+  /* Text */
+  --text-primary:   #d4d4d4;  /* main text — VS Code default */
+  --text-secondary: #858585;  /* muted / line numbers */
+  --text-tertiary:  #5a5a5a;  /* very muted */
+  --text-white:     #ffffff;
+
+  /* Syntax highlight tokens */
+  --syntax-blue:    #4fc3f7;  /* keywords, your accent */
+  --syntax-green:   #4ec9b0;  /* strings */
+  --syntax-yellow:  #dcdcaa;  /* functions */
+  --syntax-orange:  #ce9178;  /* values / strings alt */
+  --syntax-purple:  #c586c0;  /* control flow */
+  --syntax-red:     #f44747;  /* errors */
+  --syntax-comment: #6a9955;  /* comments */
+
+  /* UI chrome */
+  --border:         #3e3e3e;  /* subtle borders */
+  --border-active:  #4fc3f7;  /* active tab underline */
+  --statusbar-bg:   #007acc;  /* VS Code blue status bar */
+  --statusbar-text: #ffffff;
+  --titlebar-bg:    #323233;  /* macOS title bar */
+
+  /* Typography */
+  --font-mono: 'Fira Code', 'Courier New', monospace;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Spacing */
+  --sidebar-width:     240px;
+  --activitybar-width: 48px;
+  --tabbar-height:     35px;
+  --statusbar-height:  22px;
+  --titlebar-height:   30px;
+  --menubar-height:    30px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
