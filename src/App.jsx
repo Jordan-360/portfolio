@@ -12,6 +12,7 @@ import Skills from './components/sections/Skills'
 import Experience from './components/sections/Experience'
 import Contact from './components/sections/Contact'
 import ReadMe from './components/sections/ReadMe'
+import CommandPalette from './components/ui/CommandPalette'
 
 const SECTIONS = {
   'home.tsx': <Home />,
@@ -29,6 +30,7 @@ export default function App() {
   const [activeFile, setActiveFile] = useState('home.tsx')
   const [openTabs, setOpenTabs] = useState(['home.tsx'])
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [paletteOpen, setPaletteOpen] = useState(false)
 
   function openFile(file) {
     if (!openTabs.includes(file)) {
@@ -48,7 +50,7 @@ export default function App() {
 
   return (
     <div className="ide-container">
-      <TopBar />
+      <TopBar onSearchClick={() => setPaletteOpen(true)}/>
       <MenuBar />
       <div className="ide-body">
         <ActivityBar onExplorerClick={() => setSidebarOpen(s => !s)} />
@@ -77,6 +79,12 @@ export default function App() {
         </div>
       </div>
       <StatusBar activeFile={activeFile} />
+      {paletteOpen && (
+        <CommandPalette
+          onFileOpen={openFile}
+          onClose={() => setPaletteOpen(false)}
+        />
+      )}
     </div>
   )
 }

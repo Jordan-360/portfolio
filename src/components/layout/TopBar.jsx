@@ -1,4 +1,4 @@
-export default function TopBar() {
+export default function TopBar({ onSearchClick }) {
   return (
     <div className="titlebar">
       <div className="titlebar__dots">
@@ -7,7 +7,9 @@ export default function TopBar() {
         <div className="titlebar__dot titlebar__dot--green" />
       </div>
 
-      <div style={{
+      <div 
+        onClick={onSearchClick}
+        style={{
         position: 'absolute',
         left: '50%',
         transform: 'translateX(-50%)',
@@ -20,6 +22,7 @@ export default function TopBar() {
         padding: '3px 12px',
         minWidth: '300px',
         justifyContent: 'space-between',
+        cursor: 'pointer'
       }}>
         <div style={{
           display: 'flex',
@@ -27,7 +30,7 @@ export default function TopBar() {
           gap: '8px',
           fontSize: '12px',
           color: 'var(--text-secondary)',
-          fontFamily: 'var(--font-sans)',
+          fontFamily: 'var(--font-sans)'
         }}>
           <span>🔍</span>
           <span>jordan-wood</span>

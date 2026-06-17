@@ -1,4 +1,7 @@
 ﻿import { useState, useEffect } from 'react'
+import { VscFolder, VscPerson, VscMail, VscFile, VscGlobe } from 'react-icons/vsc'
+import { SiGithub, SiGmail } from 'react-icons/si'
+
 
 const ROLES = [ 
   'Building scalable frontend experiences 🖥️',
@@ -111,7 +114,6 @@ export default function Home() {
         <span className="cursor" />
       </div>
 
-      {/* Bio */}
         {/* Bio */}
       <div style={{
         fontFamily: 'var(--font-mono)',
@@ -124,62 +126,65 @@ export default function Home() {
         I build modern web applications that are clean, scalable, and built to last. From migrating legacy enterprise systems to crafting full-stack solutions from scratch —{' '}
         <span style={{ color: 'var(--accent)' }}>I turn requirements into reality.</span>
       </div>
-
-      {/* CTA Buttons */}
+{/* CTA Buttons */}
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '48px' }}>
-        <button
-          onClick={() => {}}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            padding: '10px 20px',
-            background: 'var(--accent)',
-            color: '#000',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontWeight: 600,
-          }}
-        >
-          {'>'} projects.tsx
+        <button style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '13px',
+          padding: '10px 20px',
+          background: 'var(--accent)',
+          color: '#000',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontWeight: 600,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}>
+          <VscFolder /> projects.tsx
         </button>
-        <button
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            padding: '10px 20px',
-            background: 'transparent',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border)',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          {'>'} about.tsx
+        <button style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '13px',
+          padding: '10px 20px',
+          background: 'transparent',
+          color: 'var(--text-primary)',
+          border: '1px solid var(--border)',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}>
+          <VscPerson /> about.tsx
         </button>
-        <button
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            padding: '10px 20px',
-            background: 'transparent',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border)',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          {'>'} contact.tsx
+        <button style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '13px',
+          padding: '10px 20px',
+          background: 'transparent',
+          color: 'var(--text-primary)',
+          border: '1px solid var(--border)',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}>
+          <VscMail /> contact.tsx
         </button>
       </div>
 
-       {/* Social links */}
+     {/* Social links */}
       <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-        {[
-          { label: 'GitHub',   href: 'https://github.com/Jordan-360' },
-          { label: 'LinkedIn', href: 'https://linkedin.com/in/Jordan526' },
-          { label: 'Resume',   href: '#' },
+         {[
+          { label: 'GitHub',   href: 'https://github.com/Jordan-360',        icon: <SiGithub />,   color: '#ffffff' },
+          { label: 'LinkedIn', href: 'https://linkedin.com/in/Jordan526',    icon: <VscGlobe />,   color: '#0a66c2' },
+          { label: 'Resume',   href: '#',                                     icon: <VscFile />,    color: '#4fc3f7' },
+          { label: 'Gmail',    href: 'mailto:jordanwood159@gmail.com',        icon: <SiGmail />,    color: '#EA4335' },
         ].map(link => (
+
           <a
             key={link.label}
             href={link.href}
@@ -190,24 +195,29 @@ export default function Home() {
               fontSize: '13px',
               color: 'var(--text-secondary)',
               textDecoration: 'none',
-              border: '1px solid var(--border)',
+              border: `1px solid ${link.color}`,
               padding: '6px 14px',
               borderRadius: '4px',
-              transition: 'color 0.15s, border-color 0.15s',
+              transition: 'color 0.15s, border-color 0.15s, background 0.15s',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
             onMouseEnter={e => {
-              e.target.style.color = 'var(--accent)'
-              e.target.style.borderColor = 'var(--accent)'
+              e.currentTarget.style.color = link.color
+              e.currentTarget.style.background = `${link.color}22`
             }}
             onMouseLeave={e => {
-              e.target.style.color = 'var(--text-secondary)'
-              e.target.style.borderColor = 'var(--border)'
+              e.currentTarget.style.color = 'var(--text-secondary)'
+              e.currentTarget.style.background = 'transparent'
             }}
           >
+            <span style={{ color: link.color }}>{link.icon}</span>
             {link.label}
           </a>
         ))}
       </div>
+
     </div>
   )
 }
