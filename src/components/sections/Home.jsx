@@ -1,16 +1,17 @@
 ﻿import { useState, useEffect } from 'react'
 import { VscFolder, VscPerson, VscMail, VscFile, VscGlobe } from 'react-icons/vsc'
 import { SiGithub, SiGmail } from 'react-icons/si'
+import profilePhoto from '../../assets/cropped phot.jpeg'
 
 
-const ROLES = [ 
+const ROLES = [
   'Building scalable frontend experiences 🖥️',
   'Exploring LLMs and modern frameworks 🤖',
   'Passionate about AI and web development 🚀',
   'Always learning, always shipping. ✨'
 ]
 
-export default function Home() {
+export default function Home({ onFileOpen }) {
   const [displayed, setDisplayed] = useState('')
   const [roleIndex, setRoleIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
@@ -50,35 +51,54 @@ export default function Home() {
         <div>{'// Welcome to my portfolio — feel free to look around'}</div>
       </div>
 
-      {/* Name */}
-      <div style={{ marginBottom: '24px' }}>
-        <h1 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'clamp(48px, 8vw, 80px)',
-          fontWeight: 600,
-          lineHeight: 1.05,
-          color: 'var(--text-white)',
-          letterSpacing: '-0.02em',
-        }}>
-          Jordan
-        </h1>
-        <h1 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: 'clamp(48px, 8vw, 80px)',
-          fontWeight: 600,
-          lineHeight: 1.05,
-          color: 'var(--accent)',
-          letterSpacing: '-0.02em',
-        }}>
-          Wood
-        </h1>
+      {/* Name + Photo row */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '40px', marginBottom: '24px' }}>
+        <div>
+          <h1 style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'clamp(48px, 8vw, 80px)',
+            fontWeight: 600,
+            lineHeight: 1.05,
+            color: 'var(--text-white)',
+            letterSpacing: '-0.02em',
+          }}>
+            Jordan
+          </h1>
+          <h1 style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'clamp(48px, 8vw, 80px)',
+            fontWeight: 600,
+            lineHeight: 1.05,
+            color: 'var(--accent)',
+            letterSpacing: '-0.02em',
+          }}>
+            Wood
+          </h1>
+        </div>
+
+        {/* Photo */}
+        <img
+          src={profilePhoto}
+          alt="Jordan Wood"
+          style={{
+            width: '220px',
+            height: '220px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            border: '3px solid var(--accent)',
+            boxShadow: '0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow)',
+            filter: 'grayscale(10%)',
+            flexShrink: 0,
+          }}
+        />
       </div>
 
-         {/* Role badges */}
+      {/* Role badges */}
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '28px' }}>
         {[
           { label: 'Software Engineer',   color: 'var(--accent)' },
-          { label: 'Web Developer',  color: 'var(--syntax-green)' },
+          { label: 'Web Developer',       color: 'var(--syntax-green)' },
           { label: 'Full Stack Engineer', color: 'var(--syntax-purple)' },
           { label: 'Open to Work',        color: 'var(--syntax-yellow)' },
         ].map(badge => (
@@ -103,7 +123,7 @@ export default function Home() {
       </div>
 
       {/* Typewriter role */}
-        <div style={{
+      <div style={{
         fontFamily: 'var(--font-mono)',
         fontSize: '12px',
         color: 'var(--text-secondary)',
@@ -114,7 +134,7 @@ export default function Home() {
         <span className="cursor" />
       </div>
 
-        {/* Bio */}
+      {/* Bio */}
       <div style={{
         fontFamily: 'var(--font-mono)',
         fontSize: '15px',
@@ -126,25 +146,10 @@ export default function Home() {
         I build modern web applications that are clean, scalable, and built to last. From migrating legacy enterprise systems to crafting full-stack solutions from scratch —{' '}
         <span style={{ color: 'var(--accent)' }}>I turn requirements into reality.</span>
       </div>
-{/* CTA Buttons */}
+
+      {/* CTA Buttons */}
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '48px' }}>
-        <button style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          padding: '10px 20px',
-          background: 'var(--accent)',
-          color: '#000',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontWeight: 600,
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-        }}>
-          <VscFolder /> projects.tsx
-        </button>
-        <button style={{
+        <button onClick={() => onFileOpen('projects.tsx')} style={{
           fontFamily: 'var(--font-mono)',
           fontSize: '13px',
           padding: '10px 20px',
@@ -157,9 +162,9 @@ export default function Home() {
           alignItems: 'center',
           gap: '8px',
         }}>
-          <VscPerson /> about.tsx
+          <VscFolder style={{ color: '#fffb01f1' }} /> Projects
         </button>
-        <button style={{
+        <button onClick={() => onFileOpen('about.html')} style={{
           fontFamily: 'var(--font-mono)',
           fontSize: '13px',
           padding: '10px 20px',
@@ -172,20 +177,35 @@ export default function Home() {
           alignItems: 'center',
           gap: '8px',
         }}>
-          <VscMail /> contact.tsx
+          <VscPerson style={{ color: 'var(--syntax-purple)' }} /> About Me
+        </button>
+        <button onClick={() => onFileOpen('contact.css')} style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '13px',
+          padding: '10px 20px',
+          background: 'transparent',
+          color: 'var(--text-primary)',
+          border: '1px solid var(--border)',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}>
+          <VscMail style={{ color: 'var(--text-secondary)' }} /> Contact
         </button>
       </div>
 
-     {/* Social links */}
+      {/* Social links */}
       <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-         {[
-          { label: 'GitHub',   href: 'https://github.com/Jordan-360',        icon: <SiGithub />,   color: '#ffffff' },
-          { label: 'LinkedIn', href: 'https://linkedin.com/in/Jordan526',    icon: <VscGlobe />,   color: '#0a66c2' },
-          { label: 'Resume',   href: '#',                                     icon: <VscFile />,    color: '#4fc3f7' },
-          { label: 'Gmail',    href: 'mailto:jordanwood159@gmail.com',        icon: <SiGmail />,    color: '#EA4335' },
+        {[
+          { label: 'GitHub',   href: 'https://github.com/Jordan-360',         icon: <SiGithub />,  color: '#ffffff' },
+          { label: 'LinkedIn', href: 'https://linkedin.com/in/jordanwood526', icon: <VscGlobe />,  color: '#0a66c2' },
+          { label: 'Resume',   href: '#',                                       icon: <VscFile />,   color: '#4fc3f7' },
+          { label: 'Gmail',    href: 'mailto:jordanwood159@gmail.com',          icon: <SiGmail />,   color: '#EA4335' },
         ].map(link => (
-
-          <a
+          
+            <a
             key={link.label}
             href={link.href}
             target="_blank"
@@ -202,6 +222,7 @@ export default function Home() {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
+              lineHeight: 1
             }}
             onMouseEnter={e => {
               e.currentTarget.style.color = link.color

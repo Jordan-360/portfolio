@@ -84,7 +84,7 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                         ref={inputRef}
                         value={query}
                         onChange={e => setQuery(e.target.value)}
-                        placeholder="Go to file or run command..."
+                        placeholder="Go to file..."
                         style={{
                             flex: 1,
                             background: 'transparent',

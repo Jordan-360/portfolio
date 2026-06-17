@@ -14,18 +14,6 @@ import Contact from './components/sections/Contact'
 import ReadMe from './components/sections/ReadMe'
 import CommandPalette from './components/ui/CommandPalette'
 
-const SECTIONS = {
-  'home.tsx': <Home />,
-  'about.tsx': <About />,
-  'projects.tsx': <Projects />,
-  'skills.json': <Skills />,
-  'experience.ts': <Experience />,
-  'contact.tsx': <Contact />,
-  'README.md': <ReadMe />,
-}
-
-
-
 export default function App() {
   const [activeFile, setActiveFile] = useState('home.tsx')
   const [openTabs, setOpenTabs] = useState(['home.tsx'])
@@ -41,6 +29,7 @@ export default function App() {
 
   function closeTab(file, e) {
     e.stopPropagation()
+    if(file === 'home.tsx') return
     const newTabs = openTabs.filter(t => t !== file)
     setOpenTabs(newTabs)
     if (activeFile === file) {
@@ -48,12 +37,32 @@ export default function App() {
     }
   }
 
+  const SECTIONS = {
+  'home.tsx': <Home onFileOpen={openFile} />,
+  'about.html': <About />,
+  'projects.js': <Projects />,
+  'skills.json': <Skills />,
+  'experience.ts': <Experience />,
+  'contact.css': <Contact />,
+  'README.md': <ReadMe />,
+}
+
+
   return (
     <div className="ide-container">
       <TopBar onSearchClick={() => setPaletteOpen(true)}/>
       <MenuBar />
       <div className="ide-body">
-        <ActivityBar onExplorerClick={() => setSidebarOpen(s => !s)} />
+        <ActivityBar 
+          onExplorerClick={(isActive) => { 
+            if(isActive) {
+              setSidebarOpen(s => !s)
+            } else { 
+               setSidebarOpen(true)
+             }
+          }}
+          onSearchClick={() => setPaletteOpen(true)}
+          />
         <Sidebar
           activeFile={activeFile}
           onFileClick={openFile}
