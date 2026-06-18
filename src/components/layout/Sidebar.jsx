@@ -4,8 +4,6 @@ const FILES = [
   'home.tsx',
   'about.html',
   'projects.js',
-  'skills.json',
-  'experience.ts',
   'contact.css',
   'README.md',
 ]

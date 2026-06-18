@@ -5,10 +5,8 @@ const FILES = [
     { name: 'home.tsx', path: 'src/home.tsx' },
     { name: 'about.html', path: 'src/about.html' },
     { name: 'projects.js', path: 'src/projects.js' },
-    { name: 'skills.json', path: 'src/skills.json' },
-    { name: 'experience.ts', path: 'src/experience.ts' },
     { name: 'contact.css', path: 'src/contact.css' },
-    { name: 'README.md', path: './README.md' },
+    { name: 'README.md', path: './README.md' }
 ]
 
 export default function CommandPalette({ onFileOpen, onClose }) {

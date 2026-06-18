@@ -8,8 +8,6 @@ import StatusBar from './components/layout/StatusBar'
 import Home from './components/sections/Home'
 import About from './components/sections/About'
 import Projects from './components/sections/Projects'
-import Skills from './components/sections/Skills'
-import Experience from './components/sections/Experience'
 import Contact from './components/sections/Contact'
 import ReadMe from './components/sections/ReadMe'
 import CommandPalette from './components/ui/CommandPalette'
@@ -41,8 +39,6 @@ export default function App() {
   'home.tsx': <Home onFileOpen={openFile} />,
   'about.html': <About />,
   'projects.js': <Projects />,
-  'skills.json': <Skills />,
-  'experience.ts': <Experience />,
   'contact.css': <Contact />,
   'README.md': <ReadMe />,
 }

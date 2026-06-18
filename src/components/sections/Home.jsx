@@ -1,6 +1,7 @@
 ﻿import { useState, useEffect } from 'react'
 import { VscFolder, VscPerson, VscMail, VscFile, VscGlobe } from 'react-icons/vsc'
 import { SiGithub, SiGmail } from 'react-icons/si'
+import { FaLinkedin } from 'react-icons/fa'
 import profilePhoto from '../../assets/cropped phot.jpeg'
 
 
@@ -149,7 +150,7 @@ export default function Home({ onFileOpen }) {
 
       {/* CTA Buttons */}
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '48px' }}>
-        <button onClick={() => onFileOpen('projects.tsx')} style={{
+        <button onClick={() => onFileOpen('projects.js')} style={{
           fontFamily: 'var(--font-mono)',
           fontSize: '13px',
           padding: '10px 20px',
@@ -200,7 +201,7 @@ export default function Home({ onFileOpen }) {
       <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
         {[
           { label: 'GitHub',   href: 'https://github.com/Jordan-360',         icon: <SiGithub />,  color: '#ffffff' },
-          { label: 'LinkedIn', href: 'https://linkedin.com/in/jordanwood526', icon: <VscGlobe />,  color: '#0a66c2' },
+          { label: 'LinkedIn', href: 'https://linkedin.com/in/jordanwood526', icon: <FaLinkedin />,  color: '#0a66c2' },
           { label: 'Resume',   href: '#',                                       icon: <VscFile />,   color: '#4fc3f7' },
           { label: 'Gmail',    href: 'mailto:jordanwood159@gmail.com',          icon: <SiGmail />,   color: '#EA4335' },
         ].map(link => (
