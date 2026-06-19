@@ -22,16 +22,17 @@ const BOTTOM_ICONS = [
   { icon: <VscAccount />,      label: 'Account'  },
 ]
 
-export default function ActivityBar({ onExplorerClick, onSearchClick }) {
+export default function ActivityBar({ onExplorerClick, onSearchClick, onFileOpen }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   function handleClick(i) { 
     const isActive = activeIndex === i
     setActiveIndex(i)
-    if(i === 0) onExplorerClick(isActive)
-    if(i === 1) onSearchClick()
-    if(i === 2) alert('Resume coming soon!')
+    if (i === 0) onExplorerClick(isActive)
+    if (i === 1) onSearchClick()
+    if (i === 2) onFileOpen('resume.pdf')
   }
+
   return (
     <div className="activitybar">
       {TOP_ICONS.map((item, i) => (

@@ -17,7 +17,15 @@
         fontStyle: 'italic',
         marginBottom: '32px',
       }}>
-        {'<!-- about.html - Jordan Wood -->'}
+        <div style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '13px',
+                    color: 'var(--syntax-comment)',
+                    fontStyle: 'italic',
+                    marginBottom: '32px',
+                }}>
+                    {"// about.html - Jordan Wood"}
+                </div>
       </div>
 
       {/* Heading */}

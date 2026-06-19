@@ -5,6 +5,7 @@ const FILES = [
   'about.html',
   'projects.js',
   'contact.css',
+  'resume.pdf',
   'README.md',
 ]
 

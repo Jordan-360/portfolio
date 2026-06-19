@@ -5,6 +5,7 @@ import jsonIcon from '../../assets/icons/file_type_json.svg'
 import mdIcon from '../../assets/icons/file_type_markdown.svg'
 import htmlIcon from '../../assets/icons/file_type_html.svg'
 import cssIcon from '../../assets/icons/file_type_css.svg'
+import pdfIcon from '../../assets/icons/file_type_pdf2.svg'
 
 const ICON_MAP = {
   'tsx':  reactIcon,
@@ -13,7 +14,8 @@ const ICON_MAP = {
   'json': jsonIcon,
   'md':   mdIcon,
   'html': htmlIcon,
-  'css': cssIcon
+  'css': cssIcon,
+  'pdf':  pdfIcon
 }
 
 export default function FileIcon({ filename }) {

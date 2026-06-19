@@ -6,6 +6,7 @@ const FILES = [
     { name: 'about.html', path: 'src/about.html' },
     { name: 'projects.js', path: 'src/projects.js' },
     { name: 'contact.css', path: 'src/contact.css' },
+    { name: 'resume.pdf', path: 'src/'},
     { name: 'README.md', path: './README.md' }
 ]
 

@@ -11,6 +11,7 @@ import Projects from './components/sections/Projects'
 import Contact from './components/sections/Contact'
 import ReadMe from './components/sections/ReadMe'
 import CommandPalette from './components/ui/CommandPalette'
+import Resume from './components/sections/Resume'
 
 export default function App() {
   const [activeFile, setActiveFile] = useState('home.tsx')
@@ -27,7 +28,7 @@ export default function App() {
 
   function closeTab(file, e) {
     e.stopPropagation()
-    if(file === 'home.tsx') return
+    if (file === 'home.tsx') return
     const newTabs = openTabs.filter(t => t !== file)
     setOpenTabs(newTabs)
     if (activeFile === file) {
@@ -36,29 +37,33 @@ export default function App() {
   }
 
   const SECTIONS = {
-  'home.tsx': <Home onFileOpen={openFile} />,
-  'about.html': <About />,
-  'projects.js': <Projects />,
-  'contact.css': <Contact />,
-  'README.md': <ReadMe />,
-}
-
+    'home.tsx': <Home onFileOpen={openFile} />,
+    'about.html': <About />,
+    'projects.js': <Projects />,
+    'contact.css': <Contact />,
+    'resume.pdf': <Resume />,
+    'README.md': <ReadMe />,
+  }
 
   return (
     <div className="ide-container">
-      <TopBar onSearchClick={() => setPaletteOpen(true)}/>
+      <TopBar onSearchClick={() => setPaletteOpen(true)} />
       <MenuBar />
       <div className="ide-body">
-        <ActivityBar 
-          onExplorerClick={(isActive) => { 
-            if(isActive) {
+        <ActivityBar
+          onExplorerClick={(isActive) => {
+            if (activeFile !== 'home.tsx') {
+              openFile('home.tsx')
+              setSidebarOpen(true)
+            } else if (isActive) {
               setSidebarOpen(s => !s)
-            } else { 
-               setSidebarOpen(true)
-             }
+            } else {
+              setSidebarOpen(true)
+            }
           }}
           onSearchClick={() => setPaletteOpen(true)}
-          />
+          onFileOpen={openFile}
+        />
         <Sidebar
           activeFile={activeFile}
           onFileClick={openFile}
