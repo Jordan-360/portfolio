@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import TopBar from './components/layout/TopBar'
 import MenuBar from './components/layout/MenuBar'
 import ActivityBar from './components/layout/ActivityBar'
@@ -12,6 +11,8 @@ import Contact from './components/sections/Contact'
 import ReadMe from './components/sections/ReadMe'
 import CommandPalette from './components/ui/CommandPalette'
 import Resume from './components/sections/Resume'
+import { useState, useEffect } from 'react'
+import HomeRunAnimation from './components/ui/HomeRunAnimation'
 
 export default function App() {
   const [activeFile, setActiveFile] = useState('home.tsx')
@@ -35,6 +36,24 @@ export default function App() {
       setActiveFile(newTabs[newTabs.length - 1] || 'home.tsx')
     }
   }
+
+  const [konamiActivated, setKonamiActivated] = useState(false)
+
+ useEffect(() => {
+  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
+  let inputSequence = []
+
+  function handleKeyDown(e) {
+    inputSequence.push(e.key)
+    inputSequence = inputSequence.slice(-konamiCode.length)
+    if (inputSequence.join(',') === konamiCode.join(',')) {
+      setKonamiActivated(true)
+    }
+  }
+
+  window.addEventListener('keydown', handleKeyDown)
+  return () => window.removeEventListener('keydown', handleKeyDown)
+}, [])
 
   const SECTIONS = {
     'home.tsx': <Home onFileOpen={openFile} />,
@@ -94,6 +113,9 @@ export default function App() {
           onFileOpen={openFile}
           onClose={() => setPaletteOpen(false)}
         />
+      )}
+        {konamiActivated && (
+        <HomeRunAnimation onComplete={() => setKonamiActivated(false)} />
       )}
     </div>
   )
