@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
+import marinersLogo from '../../assets/mariners-logo.svg'
 
 export default function ReadMe() {
-    const [mariners, setMariners] = useState(null)
+  const [mariners, setMariners] = useState(null)
 
   useEffect(() => {
     fetch('https://statsapi.mlb.com/api/v1/teams/136?hydrate=standings')
@@ -21,8 +22,17 @@ export default function ReadMe() {
       .catch(err => console.error('MLB API error:', err))
   }, [])
   return (
-    <div style={{ maxWidth: '860px', padding: '48px 0' }}>
 
+    <div style={{ maxWidth: '860px', padding: '48px 0' }}>
+      <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// README.md - the stuff that doesn't fit on a resume"}
+      </div>
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <h1 style={{
@@ -34,22 +44,22 @@ export default function ReadMe() {
         }}>
           A Little More About Me 👋
         </h1>
-         <div style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '13px',
-                color: 'var(--text-secondary)',
-                marginBottom: '40px',
-            }}>
-                <div style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '13px',
-                    color: 'var(--syntax-comment)',
-                    fontStyle: 'italic',
-                    marginBottom: '32px',
-                }}>
-                    {"// hobbies · passions · interests"}
-                </div>
-            </div>
+        <div style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '13px',
+          color: 'var(--text-secondary)',
+          marginBottom: '40px',
+        }}>
+          <div style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '13px',
+            color: 'var(--syntax-comment)',
+            fontStyle: 'italic',
+            marginBottom: '32px',
+          }}>
+            {"// hobbies · passions · interests"}
+          </div>
+        </div>
       </div>
 
       {/* Extended Story */}
@@ -92,7 +102,16 @@ export default function ReadMe() {
         {'Today I\'m driven by a passion for building software that makes a real impact, and by wanting to show my family that with enough dedication, you can build the future you want.'}
       </div>
 
-     {/* Mariners Card */}
+      {/* Mariners Card */}
+      <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// who I root for"}
+      </div>
       <div style={{
         border: '2px solid #0C2C56',
         borderRadius: '8px',
@@ -101,19 +120,26 @@ export default function ReadMe() {
         background: 'linear-gradient(135deg, #0C2C56 0%, #1a1a1a 100%)',
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <h2 style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: '#C4CED4',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            margin: 0,
-          }}>
-            ⚾ Seattle Mariners — My Home Team
-          </h2>
-          <span style={{ fontSize: '11px', color: '#0C2C56', background: '#C4CED4', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
-            RIDE OR DIE
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <img
+              src={marinersLogo}
+              alt="Seattle Mariners logo"
+              style={{ width: '23px', height: '23px' }}
+            />
+            <h2 style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: '#C4CED4',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}>
+              Seattle Mariners
+            </h2>
+          </div>
+          <span style={{ fontSize: '11px', color: '#016cf8', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+            #TRIDENTS UP🔱
           </span>
         </div>
 
@@ -166,7 +192,16 @@ export default function ReadMe() {
         </div>
       </div>
 
-{/* Gaming Loadout */}
+      {/* Gaming Loadout */}
+      <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// how I unwind"}
+      </div>
       <div style={{
         border: '1px solid var(--border)',
         borderRadius: '8px',
@@ -182,13 +217,17 @@ export default function ReadMe() {
           textTransform: 'uppercase',
           marginBottom: '20px',
         }}>
-          🎮 Current Loadout
+          🎮 Games I Enjoy
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
           {[
-            { game: 'Overwatch 2', role: 'Support / Flex', color: '#f99e1a' },
-            { game: 'Valorant', role: 'Duelist / Initiator', color: '#ff4655' },
-            { game: 'CS2', role: 'Rifler', color: '#de9b35' },
+            { game: 'Overwatch 2', color: '#f99e1a' },
+            { game: 'Valorant', color: '#ff4655' },
+            { game: 'Call of Duty', color: '#00bd00' },
+            { game: 'Counter-Strike 2', color: '#06acf8' },
+            { game: 'Halo', color: '#d3eb00' },
+            { game: 'ARC Raiders', color: '#b406f8' },
+
           ].map((g, i) => (
             <div key={i} style={{
               border: `1px solid ${g.color}`,
@@ -210,6 +249,15 @@ export default function ReadMe() {
 
       {/* Fun Facts */}
       <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// interesting facts"}
+      </div>
+      <div style={{
         border: '1px solid var(--border)',
         borderRadius: '8px',
         padding: '24px',
@@ -228,8 +276,8 @@ export default function ReadMe() {
         </h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {[
-            { icon: '🎮', text: 'Tactical FPS enthusiast — Overwatch is my main, but you\'ll catch me in Valorant, CS, or COD too. This is genuinely where my love for software started.' },
-            { icon: '🧱', text: 'I love tinkering and building things by hand. Right now that means LEGO sets, but I\'ve always been into taking apart and rebuilding electronics.' },
+            { icon: '🎮', text: 'FPS gaming enthusiast — Overwatch is my main, but can catch me in Valorant, Counter-Strike, or Call of Duty as well. This is genuinely where my love for software started.' },
+            { icon: '🧱', text: 'I love tinkering and building things by hand. Right now that means LEGO sets, but I\'ve always been into taking apart and rebuilding anything I can get my hands on.' },
             { icon: '⚾', text: 'Baseball shaped a huge part of who I am — the discipline and teamwork I learned on the field still show up in how I approach engineering today.' },
             { icon: '🤖', text: 'Currently deep diving into AI and how LLMs actually work under the hood, while sharpening my frontend skills with new frameworks and libraries.' },
           ].map((fact, i) => (
@@ -250,6 +298,15 @@ export default function ReadMe() {
 
       {/* What I'm Playing / Learning */}
       <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// what keeps me busy"}
+      </div>
+      <div style={{
         border: '1px solid var(--border)',
         borderRadius: '8px',
         padding: '24px',
@@ -268,7 +325,7 @@ export default function ReadMe() {
             textTransform: 'uppercase',
             marginBottom: '12px',
           }}>
-            🎮 Currently Playing
+            🛠️ Hobbies
           </h2>
           <div style={{
             fontFamily: 'var(--font-mono)',
@@ -276,8 +333,9 @@ export default function ReadMe() {
             color: 'var(--text-secondary)',
             lineHeight: '1.7',
           }}>
-            Overwatch 2 — main support/flex<br />
-            Occasionally: Valorant, CS2
+            Building LEGO sets<br />
+            Tinkering with electronics<br />
+            FPS Games
           </div>
         </div>
         <div>
@@ -305,6 +363,15 @@ export default function ReadMe() {
       </div>
 
       {/* Coding Philosophy */}
+      <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// how I think about writing code"}
+      </div>
       <div style={{
         border: '1px solid var(--border)',
         borderRadius: '8px',
@@ -345,6 +412,15 @@ export default function ReadMe() {
 
       {/* How this site was built */}
       <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '32px',
+      }}>
+        {"// peeking behind the curtain"}
+      </div>
+      <div style={{
         border: '1px solid var(--border)',
         borderRadius: '8px',
         padding: '24px',
@@ -384,7 +460,7 @@ export default function ReadMe() {
         marginTop: '48px',
       }}>
         {'// thanks for reading — you found the secret file 🕵️'}
-        <br/>
+        <br />
         {"// try typing (↑ ↑ ↓ ↓ ← → ← → b a) or the Konami Code on your keyboard for a cool easter egg 🥚"}
       </div>
 
