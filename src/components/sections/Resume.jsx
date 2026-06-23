@@ -31,10 +31,12 @@ export default function Resume() {
         marginBottom: '24px',
       }}>
         <h1 style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: '32px',
+          fontFamily: 'var(--font-heading)',
+          fontSize: '36px',
+          letterSpacing: '0.1em',
           fontWeight: 800,
           color: 'var(--text-white)',
+          marginBottom: '8px',
         }}>
           Resume
         </h1>
@@ -58,6 +60,16 @@ export default function Resume() {
         >
           ↓ Download PDF
         </a>
+      </div>
+
+       <div style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: '13px',
+        color: 'var(--syntax-comment)',
+        fontStyle: 'italic',
+        marginBottom: '24px',
+      }}>
+        {'// the official record'}
       </div>
 
       <div style={{

@@ -13,6 +13,9 @@ import CommandPalette from './components/ui/CommandPalette'
 import Resume from './components/sections/Resume'
 import { useState, useEffect } from 'react'
 import HomeRunAnimation from './components/ui/HomeRunAnimation'
+import resumePDF from './assets/resume.pdf'
+import MockTerminal from './components/ui/MockTerminal'
+
 
 export default function App() {
   const [activeFile, setActiveFile] = useState('home.tsx')
@@ -37,23 +40,29 @@ export default function App() {
     }
   }
 
+  function closeAllTabs() {
+  setOpenTabs(['home.tsx'])
+  setActiveFile('home.tsx')
+}
+
   const [konamiActivated, setKonamiActivated] = useState(false)
+  const [terminalRunning, setTerminalRunning] = useState(false)
 
- useEffect(() => {
-  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
-  let inputSequence = []
+  useEffect(() => {
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
+    let inputSequence = []
 
-  function handleKeyDown(e) {
-    inputSequence.push(e.key)
-    inputSequence = inputSequence.slice(-konamiCode.length)
-    if (inputSequence.join(',') === konamiCode.join(',')) {
-      setKonamiActivated(true)
+    function handleKeyDown(e) {
+      inputSequence.push(e.key)
+      inputSequence = inputSequence.slice(-konamiCode.length)
+      if (inputSequence.join(',') === konamiCode.join(',')) {
+        setKonamiActivated(true)
+      }
     }
-  }
 
-  window.addEventListener('keydown', handleKeyDown)
-  return () => window.removeEventListener('keydown', handleKeyDown)
-}, [])
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const SECTIONS = {
     'home.tsx': <Home onFileOpen={openFile} />,
@@ -67,7 +76,19 @@ export default function App() {
   return (
     <div className="ide-container">
       <TopBar onSearchClick={() => setPaletteOpen(true)} />
-      <MenuBar />
+      <MenuBar
+        openTabs={openTabs}
+        activeFile={activeFile}
+        onFileOpen={openFile}
+        onTabClose={closeTab}
+        onCloseAllTabs={closeAllTabs}
+        onPaletteOpen={() => setPaletteOpen(true)}
+        onResumeDownload={() => {
+          const link = document.createElement('a')
+          link.href = resumePDF
+          link.download = 'Jordan_Wood_Resume.pdf'
+          link.click()
+        }} />
       <div className="ide-body">
         <ActivityBar
           onExplorerClick={(isActive) => {
@@ -82,6 +103,8 @@ export default function App() {
           }}
           onSearchClick={() => setPaletteOpen(true)}
           onFileOpen={openFile}
+          onEasterEgg={() => setKonamiActivated(true)}
+          onRunDebug={() => setTerminalRunning(true)}
         />
         <Sidebar
           activeFile={activeFile}
@@ -114,8 +137,11 @@ export default function App() {
           onClose={() => setPaletteOpen(false)}
         />
       )}
-        {konamiActivated && (
+      {konamiActivated && (
         <HomeRunAnimation onComplete={() => setKonamiActivated(false)} />
+      )}
+      {terminalRunning && (
+        <MockTerminal onComplete={() => setTerminalRunning(false)} />
       )}
     </div>
   )

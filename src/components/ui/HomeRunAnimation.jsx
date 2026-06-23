@@ -1,28 +1,28 @@
 import { useEffect, useState } from 'react'
 
 const C = {
-  crowd:    '#111122',
-  grass:    '#1a6b1a',
-  grass2:   '#156015',
-  dirt:     '#b87428',
-  warning:  '#c08030',
-  wall:     '#1a3a8a',
-  wallTop:  '#3355cc',
-  white:    '#fcfcfc',
-  red:      '#cc0000',
-  skin:     '#f0a050',
-  navy:     '#000060',
-  yellow:   '#f8b800',
-  black:    '#000000',
-  gray:     '#606060',
-  brown:    '#885522',
+  crowd: '#111122',
+  grass: '#1a6b1a',
+  grass2: '#156015',
+  dirt: '#b87428',
+  warning: '#c08030',
+  wall: '#1a3a8a',
+  wallTop: '#3355cc',
+  white: '#fcfcfc',
+  red: '#cc0000',
+  skin: '#f0a050',
+  navy: '#000060',
+  yellow: '#f8b800',
+  black: '#000000',
+  gray: '#606060',
+  brown: '#885522',
   darkgray: '#333333',
 }
 
 const CROWD_COLORS = [
-  '#5566bb','#7788dd','#4455aa','#cc8844','#88bb44',
-  '#bb4488','#dd6622','#44aacc','#cc4444','#88cc44',
-  '#fcfcfc','#cc8800','#4488ff','#aabb44','#ff8844',
+  '#5566bb', '#7788dd', '#4455aa', '#cc8844', '#88bb44',
+  '#bb4488', '#dd6622', '#44aacc', '#cc4444', '#88cc44',
+  '#fcfcfc', '#cc8800', '#4488ff', '#aabb44', '#ff8844',
 ]
 
 function makeCrowdBlocks() {
@@ -31,25 +31,25 @@ function makeCrowdBlocks() {
   const push = (x, y, w, h) =>
     out.push({ id: id++, x, y, w, h, c: CROWD_COLORS[((x * 7 + y * 13) >>> 0) % CROWD_COLORS.length] })
   // CF bleachers (above wall)
-  for (let x = 64; x < 376; x += 9)  for (let y = 1;  y < 41;  y += 8) push(x, y, 7, 6)
+  for (let x = 64; x < 376; x += 9)  for (let y = 1; y < 41; y += 8) push(x, y, 7, 6)
   // Left corner stands
-  for (let x = 0;  x < 64;  x += 9)  for (let y = 1;  y < 125; y += 8) push(x, y, 7, 6)
+  for (let x = 0; x < 64; x += 9)  for (let y = 1; y < 125; y += 8) push(x, y, 7, 6)
   // Right corner stands
-  for (let x = 378; x < 440; x += 9) for (let y = 1;  y < 125; y += 8) push(x, y, 7, 6)
+  for (let x = 378; x < 440; x += 9) for (let y = 1; y < 125; y += 8) push(x, y, 7, 6)
   return out
 }
 
 const CROWD_BLOCKS = makeCrowdBlocks()
 
 function generateFireworks() {
-  const colors = ['#ff3333','#ffff33','#33ffff','#ff33ff','#33ff33','#ff8833','#ffffff','#ff6600']
+  const colors = ['#ff3333', '#ffff33', '#33ffff', '#ff33ff', '#33ff33', '#ff8833', '#ffffff', '#ff6600']
   return Array.from({ length: 12 }, (_, i) => ({
     id: i,
     x: 8 + ((i * 19 + 11) % 82),
-    y: 2 + ((i * 13 + 7)  % 38),
+    y: 2 + ((i * 13 + 7) % 38),
     color: colors[i % colors.length],
     delay: (i * 0.16).toFixed(2),
-    size:  12 + (i % 4) * 5,
+    size: 12 + (i % 4) * 5,
   }))
 }
 
@@ -59,7 +59,7 @@ function generateFireworks() {
 // Field polygon: 0,290→0,175→44,115→118,60→220,42→322,60→396,115→440,175→440,290
 
 export default function HomeRunAnimation({ onComplete }) {
-  const [phase, setPhase]       = useState(0)
+  const [phase, setPhase] = useState(0)
   const [fireworks, setFireworks] = useState([])
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function HomeRunAnimation({ onComplete }) {
   const ballY = phase === 0 ? 190 : phase <= 3 ? 254 : 62
   const ballTr =
     phase === 1 ? 'left 0.72s linear, top 0.73s linear' :
-    phase === 4 ? 'left 1.05s ease-out, top 0.9s ease-out' : 'none'
+      phase === 4 ? 'left 1.05s ease-out, top 0.9s ease-out' : 'none'
 
   return (
     <div style={{
@@ -97,9 +97,9 @@ export default function HomeRunAnimation({ onComplete }) {
         padding: '4px 12px', border: '2px solid #444', borderBottom: 'none',
         letterSpacing: '0.08em',
       }}>
-        <span>DEV&nbsp;&nbsp;0</span>
-        <span style={{ color: C.yellow }}>TOP 1ST</span>
-        <span>OPP&nbsp;&nbsp;0</span>
+        <span>LAD&nbsp;&nbsp;0</span>
+        <span style={{ color: C.yellow }}>BOTTOM 9TH</span>
+        <span>SEA&nbsp;&nbsp;1</span>
       </div>
 
       <div style={{ position: 'relative', width: 440, border: '2px solid #444', overflow: 'hidden' }}>
@@ -118,14 +118,14 @@ export default function HomeRunAnimation({ onComplete }) {
           ))}
 
           {/* Center-field scoreboard */}
-          <rect x="152" y="2"  width="136" height="36" fill="#111122" />
-          <rect x="152" y="2"  width="136" height="36" fill="none" stroke="#334488" strokeWidth="2" />
-          <text x="160" y="14" fill={C.yellow} fontSize="8" fontFamily="monospace" fontWeight="bold">BASEBALL PARK</text>
-          <rect x="160" y="18" width="32"  height="14" fill="#222233" />
-          <rect x="228" y="18" width="32"  height="14" fill="#222233" />
-          <text x="162" y="28" fill={C.white}  fontSize="8" fontFamily="monospace">DEV 0</text>
-          <text x="230" y="28" fill={C.white}  fontSize="8" fontFamily="monospace">OPP 0</text>
-          <text x="200" y="29" fill={C.yellow} fontSize="8" fontFamily="monospace">1ST</text>
+          <rect x="152" y="2" width="136" height="36" fill="#111122" />
+          <rect x="152" y="2" width="136" height="36" fill="none" stroke="#334488" strokeWidth="2" />
+          <text x="160" y="14" fill={C.yellow} fontSize="8" fontFamily="monospace" fontWeight="bold">T-MOBILE PARK</text>
+          <rect x="160" y="18" width="32" height="14" fill="#222233" />
+          <rect x="228" y="18" width="32" height="14" fill="#222233" />
+          <text x="162" y="28" fill={C.white} fontSize="8" fontFamily="monospace">LAD 0</text>
+          <text x="230" y="28" fill={C.white} fontSize="8" fontFamily="monospace">SEA 1</text>
+          <text x="200" y="29" fill={C.yellow} fontSize="8" fontFamily="monospace">9th</text>
 
           {/* ── PLAYING FIELD ── */}
           <polygon
@@ -144,12 +144,12 @@ export default function HomeRunAnimation({ onComplete }) {
           <polyline points="44,115 118,60 220,42 322,60 396,115"
             fill="none" stroke={C.warning} strokeWidth="14" strokeLinejoin="round" />
           <polyline points="44,115 118,60 220,42 322,60 396,115"
-            fill="none" stroke={C.wall}    strokeWidth="6"  strokeLinejoin="round" />
+            fill="none" stroke={C.wall} strokeWidth="6" strokeLinejoin="round" />
           <polyline points="44,115 118,60 220,42 322,60 396,115"
-            fill="none" stroke={C.wallTop} strokeWidth="2"  strokeLinejoin="round" />
+            fill="none" stroke={C.wallTop} strokeWidth="2" strokeLinejoin="round" />
 
           {/* ── FOUL LINES ── */}
-          <line x1="220" y1="258" x2="44"  y2="115" stroke={C.white} strokeWidth="1.5" opacity="0.9" />
+          <line x1="220" y1="258" x2="44" y2="115" stroke={C.white} strokeWidth="1.5" opacity="0.9" />
           <line x1="220" y1="258" x2="396" y2="115" stroke={C.white} strokeWidth="1.5" opacity="0.9" />
 
           {/* ── INFIELD DIRT DIAMOND ── */}
@@ -173,104 +173,111 @@ export default function HomeRunAnimation({ onComplete }) {
           {/* ── BATTER'S BOXES — two separate MLB chalk rectangles flanking home plate ── */}
           {/* Plate: x=207–233, y=258–272. Boxes extend above (toward pitcher) and below (catcher side). */}
           {/* Left box: x=162–205, y=243–276 */}
-          <rect x="162" y="243" width="2"  height="33" fill={C.white} opacity="0.85" />
-          <rect x="204" y="243" width="2"  height="33" fill={C.white} opacity="0.85" />
-          <rect x="162" y="243" width="44" height="2"  fill={C.white} opacity="0.85" />
-          <rect x="162" y="274" width="44" height="2"  fill={C.white} opacity="0.85" />
+          <rect x="162" y="243" width="2" height="33" fill={C.white} opacity="0.85" />
+          <rect x="204" y="243" width="2" height="33" fill={C.white} opacity="0.85" />
+          <rect x="162" y="243" width="44" height="2" fill={C.white} opacity="0.85" />
+          <rect x="162" y="274" width="44" height="2" fill={C.white} opacity="0.85" />
           {/* Right box: x=234–277, y=243–276 */}
-          <rect x="234" y="243" width="2"  height="33" fill={C.white} opacity="0.85" />
-          <rect x="276" y="243" width="2"  height="33" fill={C.white} opacity="0.85" />
-          <rect x="234" y="243" width="44" height="2"  fill={C.white} opacity="0.85" />
-          <rect x="234" y="274" width="44" height="2"  fill={C.white} opacity="0.85" />
+          <rect x="234" y="243" width="2" height="33" fill={C.white} opacity="0.85" />
+          <rect x="276" y="243" width="2" height="33" fill={C.white} opacity="0.85" />
+          <rect x="234" y="243" width="44" height="2" fill={C.white} opacity="0.85" />
+          <rect x="234" y="274" width="44" height="2" fill={C.white} opacity="0.85" />
 
           {/* ── PITCHER SPRITE (front-facing, small — far away) ── */}
           <g transform="translate(208, 163)">
-            <rect x="3"  y="0"  width="10" height="3" fill={C.red}   rx="1" />
-            <rect x="1"  y="2"  width="14" height="2" fill={C.red}   />
-            <rect x="3"  y="4"  width="10" height="8" fill={C.skin}  />
-            <rect x="4"  y="7"  width="2"  height="2" fill={C.black} />
-            <rect x="10" y="7"  width="2"  height="2" fill={C.black} />
-            <rect x="1"  y="12" width="14" height="10" fill={C.white} />
-            <rect x="6"  y="12" width="4"  height="10" fill={C.navy} />
-            <rect x="1"  y="17" width="14" height="3"  fill={C.navy} />
+            <rect x="3" y="0" width="10" height="3" fill={C.red} rx="1" />
+            <rect x="1" y="2" width="14" height="2" fill={C.red} />
+            <rect x="3" y="4" width="10" height="8" fill={C.skin} />
+            <rect x="4" y="7" width="2" height="2" fill={C.black} />
+            <rect x="10" y="7" width="2" height="2" fill={C.black} />
+            <rect x="1" y="12" width="14" height="10" fill={C.white} />
+            <rect x="6" y="12" width="4" height="10" fill={C.navy} />
+            <rect x="1" y="17" width="14" height="3" fill={C.navy} />
             {phase === 0 ? (
               <g>
-                <rect x="15" y="8"  width="5" height="8" fill={C.skin} />
-                <rect x="18" y="5"  width="6" height="5" fill={C.red}  />
+                <rect x="15" y="8" width="5" height="8" fill={C.skin} />
+                <rect x="18" y="5" width="6" height="5" fill={C.red} />
                 <rect x="-4" y="13" width="5" height="6" fill={C.skin} />
               </g>
             ) : (
               <g>
                 <rect x="15" y="13" width="9" height="4" fill={C.skin} />
-                <rect x="22" y="11" width="6" height="5" fill={C.red}  />
+                <rect x="22" y="11" width="6" height="5" fill={C.red} />
                 <rect x="-4" y="13" width="5" height="6" fill={C.skin} />
               </g>
             )}
-            <rect x="2"  y="22" width="5" height="9" fill={C.white} />
-            <rect x="9"  y="22" width="5" height="9" fill={C.white} />
-            <rect x="3"  y="23" width="2" height="7" fill={C.navy}  />
-            <rect x="10" y="23" width="2" height="7" fill={C.navy}  />
-            <rect x="1"  y="29" width="7" height="2" fill={C.black} />
-            <rect x="9"  y="29" width="7" height="2" fill={C.black} />
+            <rect x="2" y="22" width="5" height="9" fill={C.white} />
+            <rect x="9" y="22" width="5" height="9" fill={C.white} />
+            <rect x="3" y="23" width="2" height="7" fill={C.navy} />
+            <rect x="10" y="23" width="2" height="7" fill={C.navy} />
+            <rect x="1" y="29" width="7" height="2" fill={C.black} />
+            <rect x="9" y="29" width="7" height="2" fill={C.black} />
           </g>
 
           {/* ── CATCHER — behind home plate, body visible below plate bottom y=272 ── */}
           <g transform="translate(210, 280)">
-            <rect x="1"  y="-9"  width="12" height="10" fill={C.darkgray} rx="1" />
-            <rect x="-2" y="1"   width="18" height="9"  fill={C.gray}  />
-            <rect x="-2" y="10"  width="7"  height="7"  fill={C.gray}  />
-            <rect x="9"  y="10"  width="7"  height="7"  fill={C.gray}  />
-            <rect x="-3" y="10"  width="3"  height="15" fill="#909090" />
-            <rect x="14" y="10"  width="3"  height="15" fill="#909090" />
-            <rect x="-10" y="1"  width="9"  height="8"  fill={C.brown} />
+            <rect x="1" y="-9" width="12" height="10" fill={C.darkgray} rx="1" />
+            <rect x="-2" y="1" width="18" height="9" fill={C.gray} />
+            <rect x="-2" y="10" width="7" height="7" fill={C.gray} />
+            <rect x="9" y="10" width="7" height="7" fill={C.gray} />
+            <rect x="-3" y="10" width="3" height="15" fill="#909090" />
+            <rect x="14" y="10" width="3" height="15" fill="#909090" />
+            <rect x="-10" y="1" width="9" height="8" fill={C.brown} />
           </g>
 
           {/* ── BATTER SPRITE (back view, left batter's box — bigger, closer) ── */}
           <g transform="translate(162, 216)">
             {/* Helmet */}
-            <rect x="2"  y="0"  width="16" height="3"  fill={C.red} rx="1" />
-            <rect x="0"  y="3"  width="20" height="8"  fill={C.red} />
-            <rect x="20" y="5"  width="4"  height="6"  fill={C.red} />
+            <rect x="2" y="0" width="16" height="3" fill={C.red} rx="1" />
+            <rect x="0" y="3" width="20" height="8" fill={C.red} />
+            <rect x="20" y="5" width="4" height="6" fill={C.red} />
             {/* Neck */}
-            <rect x="6"  y="11" width="7"  height="3"  fill={C.skin} />
+            <rect x="6" y="11" width="7" height="3" fill={C.skin} />
             {/* Jersey */}
-            <rect x="0"  y="14" width="20" height="12" fill={C.white} />
-            <rect x="2"  y="14" width="2"  height="12" fill={C.navy} />
-            <rect x="16" y="14" width="2"  height="12" fill={C.navy} />
-            <rect x="6"  y="15" width="7"  height="9"  fill={C.navy} />
-            <rect x="0"  y="22" width="20" height="3"  fill={C.navy} />
+            <rect x="0" y="14" width="20" height="12" fill={C.white} />
+            <rect x="2" y="14" width="2" height="12" fill={C.navy} />
+            <rect x="16" y="14" width="2" height="12" fill={C.navy} />
+            <rect x="6" y="15" width="7" height="9" fill={C.navy} />
+            <rect x="0" y="22" width="20" height="3" fill={C.navy} />
             {/* Arms + bat */}
             {phase <= 1 ? (
               <g>
-                <rect x="20" y="11" width="7"  height="12" fill={C.skin} />
-                <rect x="-6" y="15" width="7"  height="8"  fill={C.skin} />
+                <rect x="20" y="11" width="7" height="12" fill={C.skin} />
+                <rect x="-6" y="15" width="7" height="8" fill={C.skin} />
                 <g transform="translate(23, 18) rotate(52)">
-                  <rect x="0"  y="-33" width="2" height="33" fill="#c88030" />
-                  <rect x="-1" y="-40" width="4" height="8"  fill="#c88030" />
-                  <rect x="-3" y="-52" width="8" height="13" fill="#c88030" />
-                  <rect x="-3" y="-54" width="8" height="3"  fill="#e0a040" />
+                  {/* Knob at handle base */}
+                  <rect x="-2" y="-2" width="4" height="3" fill="#a86820" />
+                  {/* Tapered bat body — handle thin, barrel wide */}
+                  <polygon
+                    points="-1,1 1,1 1.5,-30 2.5,-38 3.5,-44 -1.5,-44 -2.5,-38 -1.5,-30"
+                    fill="#c88030"
+                  />
+                  {/* Barrel cap highlight */}
+                  <ellipse cx="1" cy="-44" rx="3" ry="1.5" fill="#e0a040" />
+                  {/* Subtle wood grain shading on barrel */}
+                  <polygon points="1.5,-30 2.5,-38 3.5,-44 2,-44 1,-38 0.5,-30" fill="#b87428" opacity="0.5" />
                 </g>
               </g>
             ) : (
               <g>
-                <rect x="7"  y="9"  width="14" height="9"  fill={C.skin} />
-                <rect x="-5" y="9"  width="10" height="9"  fill={C.skin} />
+                <rect x="7" y="9" width="14" height="9" fill={C.skin} />
+                <rect x="-5" y="9" width="10" height="9" fill={C.skin} />
                 <g transform="translate(-3, 12) rotate(-52)">
-                  <rect x="0"  y="-33" width="2" height="33" fill="#c88030" />
-                  <rect x="-1" y="-40" width="4" height="8"  fill="#c88030" />
+                  <rect x="0" y="-33" width="2" height="33" fill="#c88030" />
+                  <rect x="-1" y="-40" width="4" height="8" fill="#c88030" />
                   <rect x="-3" y="-52" width="8" height="13" fill="#c88030" />
-                  <rect x="-3" y="-54" width="8" height="3"  fill="#e0a040" />
+                  <rect x="-3" y="-54" width="8" height="3" fill="#e0a040" />
                 </g>
               </g>
             )}
             {/* Hip + legs */}
-            <rect x="0"  y="25" width="20" height="5"  fill={C.white} />
-            <rect x="-2" y="30" width="9"  height="14" fill={C.white} />
-            <rect x="13" y="30" width="9"  height="14" fill={C.white} />
-            <rect x="-1" y="31" width="2"  height="12" fill={C.navy} />
-            <rect x="14" y="31" width="2"  height="12" fill={C.navy} />
-            <rect x="-4" y="42" width="13" height="3"  fill={C.black} />
-            <rect x="11" y="42" width="13" height="3"  fill={C.black} />
+            <rect x="0" y="25" width="20" height="5" fill={C.white} />
+            <rect x="-2" y="30" width="9" height="14" fill={C.white} />
+            <rect x="13" y="30" width="9" height="14" fill={C.white} />
+            <rect x="-1" y="31" width="2" height="12" fill={C.navy} />
+            <rect x="14" y="31" width="2" height="12" fill={C.navy} />
+            <rect x="-4" y="42" width="13" height="3" fill={C.black} />
+            <rect x="11" y="42" width="13" height="3" fill={C.black} />
           </g>
 
           {/* ── HOME PLATE (drawn last so it's in front) ── */}
@@ -294,21 +301,20 @@ export default function HomeRunAnimation({ onComplete }) {
           )}
 
           {/* ── HUD SIDE BOXES ── */}
-          <rect x="2"   y="178" width="76" height="90" fill={C.black} />
-          <rect x="2"   y="178" width="76" height="90" fill="none" stroke={C.white} strokeWidth="2" />
-          <text x="8"   y="193" fill={C.white}  fontSize="9" fontFamily="monospace">TOP 1</text>
-          <text x="8"   y="207" fill={C.white}  fontSize="9" fontFamily="monospace">DEV  0</text>
-          <text x="8"   y="221" fill={C.white}  fontSize="9" fontFamily="monospace">OPP  0</text>
-          <text x="8"   y="240" fill={C.white}  fontSize="8" fontFamily="monospace">B 0 S 0 O 0</text>
-          <text x="8"   y="256" fill={C.white}  fontSize="8" fontFamily="monospace">SECRET:ON</text>
+          <rect x="2" y="178" width="76" height="90" fill={C.black} />
+          <rect x="2" y="178" width="76" height="90" fill="none" stroke={C.white} strokeWidth="2" />
+          <text x="8" y="193" fill={C.white} fontSize="9" fontFamily="monospace">BOTTOM 9</text>
+          <text x="8" y="207" fill={C.white} fontSize="9" fontFamily="monospace">LAD  0</text>
+          <text x="8" y="221" fill={C.white} fontSize="9" fontFamily="monospace">SEA  1</text>
+          <text x="8" y="240" fill={C.white} fontSize="8" fontFamily="monospace">B 3 S 2 O 2</text>
 
           <rect x="362" y="192" width="76" height="76" fill={C.black} />
           <rect x="362" y="192" width="76" height="76" fill="none" stroke={C.white} strokeWidth="2" />
-          <text x="368" y="207" fill={C.white}  fontSize="9" fontFamily="monospace">J.WOOD</text>
-          <text x="368" y="221" fill={C.white}  fontSize="9" fontFamily="monospace">AVG.999</text>
-          <text x="368" y="235" fill={C.yellow} fontSize="9" fontFamily="monospace">HR   1</text>
-          <text x="368" y="254" fill={C.white}  fontSize="8" fontFamily="monospace">+1</text>
-
+          <text x="368" y="207" fill={C.white} fontSize="9" fontFamily="monospace">K.GRIFFEY JR</text>
+          <text x="368" y="221" fill={C.white} fontSize="9" fontFamily="monospace">AVG .284</text>
+          <text x="368" y="234" fill={C.yellow} fontSize="9" fontFamily="monospace">OBP .370</text>
+          <text x="368" y="247" fill={C.yellow} fontSize="9" fontFamily="monospace">SLG .538</text>
+          <text x="368" y="262" fill={C.yellow} fontSize="9" fontFamily="monospace">HR 630</text>
         </svg>
 
         {/* Ball */}
@@ -318,7 +324,7 @@ export default function HomeRunAnimation({ onComplete }) {
           borderRadius: '50%',
           background: C.white,
           left: `${(ballX / 440) * 100}%`,
-          top:  `${(ballY / 290) * 100}%`,
+          top: `${(ballY / 290) * 100}%`,
           transform: 'translate(-50%, -50%)',
           transition: ballTr,
           opacity: phase >= 5 ? 0 : 1,
@@ -332,7 +338,7 @@ export default function HomeRunAnimation({ onComplete }) {
           <div key={fw.id} style={{
             position: 'absolute',
             left: `${fw.x}%`,
-            top:  `${fw.y}%`,
+            top: `${fw.y}%`,
             width: 0, height: 0,
             animation: `nesFirework 0.9s steps(4) ${fw.delay}s infinite`,
             zIndex: 20,
@@ -376,7 +382,7 @@ export default function HomeRunAnimation({ onComplete }) {
             marginTop: 6, color: C.white, fontSize: 9,
             fontFamily: 'monospace', letterSpacing: '0.12em',
           }}>
-            J. WOOD — BAT .999
+            #24 K.GRIFFEY JR - HR NO. 631 
           </div>
         </>
       )}

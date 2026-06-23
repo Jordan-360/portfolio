@@ -31,18 +31,19 @@ export default function ReadMe() {
         fontStyle: 'italic',
         marginBottom: '32px',
       }}>
-        {"// README.md - the stuff that doesn't fit on a resume"}
+        {"// README.md - the rest of the story"}
       </div>
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <h1 style={{
-          fontFamily: 'var(--font-sans)',
+          fontFamily: 'var(--font-heading)',
           fontSize: '36px',
+          letterSpacing: '0.1em',
           fontWeight: 800,
           color: 'var(--text-white)',
           marginBottom: '8px',
         }}>
-          A Little More About Me 👋
+          Beyond the Resume
         </h1>
         <div style={{
           fontFamily: 'var(--font-mono)',
@@ -85,7 +86,8 @@ export default function ReadMe() {
           ## My Story
         </h2>
 
-        {'I grew up in '}
+        Here's the full updated version with your new paragraphs formatted to match the existing style:
+        jsx        {'I grew up in '}
         <span style={{ color: 'var(--syntax-orange)' }}>Centralia, Washington</span>
         {' — a small town you could drive through in a few minutes. Raised by my dad alongside my three siblings, '}
         <span style={{ color: 'var(--syntax-green)', fontWeight: 600 }}>baseball</span>
@@ -93,11 +95,23 @@ export default function ReadMe() {
         <span style={{ color: 'var(--syntax-yellow)' }}>2014 Babe Ruth Baseball Gold Glove Award</span>
         {' and helping my team take third place at the World Series.'}
         <br /><br />
-        {'After high school, college felt out of reach without a scholarship, so I spent a few years working full-time, trying to figure out my path. I\'d always been fascinated by '}
+        {'Outside the field, I was the kid who took things apart just to see how they worked, and '}
+        <span style={{ color: 'var(--accent)' }}>gaming</span>
+        {' played just as big a role in shaping me as baseball did. I grew up fascinated by video games, not just playing them but wondering how they were actually built. That curiosity quietly planted the seed for everything that came later, even before I knew it.'}
+        <br /><br />
+        {'After high school, college felt out of reach without a scholarship, so I spent a few years working full-time, trying to figure out my path. That same fascination with '}
         <span style={{ color: 'var(--accent)' }}>computers and video games</span>
-        {', and that curiosity eventually led me to community college for an Associate\'s in Computer Science. It wasn\'t easy at first, but I stuck with it and graduated on the Dean\'s List every semester.'}
+        {' eventually led me to community college for an Associate\'s in Computer Science. It wasn\'t easy at first, but I stuck with it and graduated on the Dean\'s List every semester.'}
         <br /><br />
         {'From there I continued at Grand Canyon University for Software Development, picked up some cybersecurity certifications along the way, and took on an IT Support internship that taught me one important thing: I loved coding, not the help desk. After graduating I dove back into Java, grinding through CodingBat, CodeStepByStep, and LeetCode to rebuild my skills and confidence.'}
+        <br /><br />
+        {'These days, when I\'m not coding, you\'ll probably find me building '}
+        <span style={{ color: 'var(--syntax-purple)' }}>LEGO sets</span>
+        {', tinkering with electronics just to understand how they tick, or queued up in a competitive match of '}
+        <span style={{ color: 'var(--accent)' }}>Overwatch, Valorant, or CS</span>
+        {'. Baseball is still a big part of my life too, I bleed '}
+        <span style={{ color: 'var(--syntax-green)', fontWeight: 600 }}>Mariners</span>
+        {' blue and green, win or lose (mostly lose, but I show up anyway).'}
         <br /><br />
         {'Today I\'m driven by a passion for building software that makes a real impact, and by wanting to show my family that with enough dedication, you can build the future you want.'}
       </div>

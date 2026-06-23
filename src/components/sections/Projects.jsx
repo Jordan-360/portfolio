@@ -70,12 +70,12 @@ export default function Projects() {
 
             {/* Heading */}
             <h1 style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '48px',
+                fontFamily: 'var(--font-heading)',
+                fontSize: '36px',
+                letterSpacing: '0.1em',
                 fontWeight: 800,
                 color: 'var(--text-white)',
-                marginBottom: '12px',
-                letterSpacing: '-0.02em',
+                marginBottom: '8px',
             }}>
                 Projects
             </h1>

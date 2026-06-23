@@ -14,7 +14,7 @@ const TOP_ICONS = [
   { icon: <VscSearch />,        label: 'Search'         },
   { icon: <VscFilePdf />,       label: 'Resume'         },
   { icon: <VscDebugAlt />,      label: 'Run & Debug'    },
-  { icon: <VscExtensions />,    label: 'Extensions'     },
+  { icon: <VscExtensions />,    label: 'Easter Egg'     },
 ]
 
 const BOTTOM_ICONS = [
@@ -22,15 +22,17 @@ const BOTTOM_ICONS = [
   { icon: <VscAccount />,      label: 'Account'  },
 ]
 
-export default function ActivityBar({ onExplorerClick, onSearchClick, onFileOpen }) {
+export default function ActivityBar({ onExplorerClick, onSearchClick, onFileOpen, onEasterEgg, onRunDebug }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
-  function handleClick(i) { 
+   function handleClick(i) {
     const isActive = activeIndex === i
     setActiveIndex(i)
     if (i === 0) onExplorerClick(isActive)
     if (i === 1) onSearchClick()
     if (i === 2) onFileOpen('resume.pdf')
+    if (i === 3) onRunDebug?.()
+    if (i === 4) onEasterEgg?.()
   }
 
   return (

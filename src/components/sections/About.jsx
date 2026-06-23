@@ -30,12 +30,13 @@
 
       {/* Heading */}
       <h1 style={{
-        fontFamily: 'var(--font-sans)',
-        fontSize: '48px',
-        fontWeight: 800,
-        color: 'var(--text-white)',
-        marginBottom: '12px',
-        letterSpacing: '-0.02em',
+       fontFamily: 'var(--font-heading)',
+        fontFamily: 'var(--font-heading)',
+          fontSize: '36px',
+          letterSpacing: '0.1em',
+          fontWeight: 800,
+          color: 'var(--text-white)',
+          marginBottom: '8px',
       }}>
         About Me
       </h1>

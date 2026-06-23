@@ -1,5 +1,5 @@
 /* ── Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ── CSS Variables ── */
 :root {
@@ -38,9 +38,10 @@
   --titlebar-bg:    #323233;  /* macOS title bar */
 
   /* Typography */
-  --font-mono: 'Fira Code', 'Courier New', monospace;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
   --font-sans: 'Inter', sans-serif;
-
+  --font-heading: 'JetBrains Mono', 'Courier New', monospace; 
+  
   /* Spacing */
   --sidebar-width:     240px;
   --activitybar-width: 48px;

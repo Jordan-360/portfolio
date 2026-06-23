@@ -56,7 +56,7 @@ export default function Home({ onFileOpen }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: '40px', marginBottom: '24px' }}>
         <div>
           <h1 style={{
-            fontFamily: 'var(--font-mono)',
+            fontFamily: 'var(--font-heading)',
             fontSize: 'clamp(48px, 8vw, 80px)',
             fontWeight: 600,
             lineHeight: 1.05,
@@ -66,7 +66,7 @@ export default function Home({ onFileOpen }) {
             Jordan
           </h1>
           <h1 style={{
-            fontFamily: 'var(--font-mono)',
+            fontFamily: 'var(--font-heading)',
             fontSize: 'clamp(48px, 8vw, 80px)',
             fontWeight: 600,
             lineHeight: 1.05,
@@ -138,7 +138,7 @@ export default function Home({ onFileOpen }) {
       {/* Bio */}
       <div style={{
         fontFamily: 'var(--font-mono)',
-        fontSize: '15px',
+        fontSize: '14px',
         lineHeight: '1.8',
         marginBottom: '40px',
         maxWidth: '560px',
