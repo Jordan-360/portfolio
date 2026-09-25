@@ -2,6 +2,26 @@
 
 const PROJECTS = [
     {
+        emoji: '🧠',
+        categories: ['AI / ML', 'PYTHON', 'PYTORCH'],
+        title: 'TinyGPT',
+        description: 'A small GPT-style language model trained from scratch on Tiny Shakespeare. Following the nanoGPT approach, I set up the training pipeline in PyTorch and ran it locally on my own GPU, so I could see firsthand how a model goes from random characters to generating Shakespeare-style text.',
+        tags: ['Python', 'PyTorch', 'Transformers', 'LLM', 'Local GPU Training'],
+        github: 'https://github.com/Jordan-360/tinygpt',
+        live: null,
+        color: '#f44747',
+    },
+    {
+        emoji: '📋',
+        categories: ['AI / RAG', 'TYPESCRIPT', 'NODE.JS'],
+        title: 'RAG-Powered Patch Notes Assistant',
+        description: 'Built because I hate reading patch notes. Patch TL;DR takes long Overwatch patch notes and turns them into quick, easy-to-read answers, using retrieval-augmented generation (RAG) so every answer cites the exact part of the patch notes it came from.',
+        tags: ['TypeScript', 'Node.js', 'RAG', 'LLM', 'Citations'],
+        github: 'https://github.com/Jordan-360/patch-notes-assistant',
+        live: null,
+        color: '#00f815',
+    },
+    {
         emoji: '🏦',
         categories: ['FULL STACK', 'JAVA', 'REACT'],
         title: 'Full-Stack Banking Application',
@@ -51,6 +71,7 @@ const PROJECTS = [
         live: null,
         color: '#c586c0',
     },
+    
 ]
 
 export default function Projects() {

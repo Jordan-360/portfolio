@@ -1,8 +1,8 @@
 ﻿export default function About() {
   const skills = {
     Languages: ['Java', 'Python', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'SQL'],
-    'Frameworks/Tools': ['Spring Boot', 'React.js', 'Angular 13', 'AngularJS', 'RxJS', 'REST APIs', 'MySQL', 'Node.js', 'Git/GitHub', 'Bitbucket', 'Vite'],
-    Concepts: ['OOP', 'SDLC', 'Agile/Scrum', 'Component-Based Architecture', 'API Integration', 'MVC', 'Unit Testing', 'Data Structures & Algorithms', 'System Integration'],
+    'Frameworks/Tools': ['Spring Boot', 'React.js', 'Angular 13', 'AngularJS','PyTorch', 'Ollama', 'RxJS', 'REST APIs', 'MySQL', 'Node.js', 'Git/GitHub', 'Bitbucket', 'Vite'],
+    Concepts: ['OOP', 'SDLC', 'Agile/Scrum', 'Component-Based Architecture', 'API Integration', 'MVC', 'Unit Testing', 'Data Structures & Algorithms', 'System Integration', 'LLMs', 'Generative AI', 'CUDA', 'Machine Learning'],
     'CI/CD & DevOps': ['Jenkins', 'CI/CD Pipelines', 'Git Branching', 'Automated Build Verification', 'Bash/PowerShell'],
   }
 
@@ -30,7 +30,6 @@
 
       {/* Heading */}
       <h1 style={{
-       fontFamily: 'var(--font-heading)',
         fontFamily: 'var(--font-heading)',
           fontSize: '36px',
           letterSpacing: '0.1em',
@@ -78,28 +77,32 @@
         color: 'var(--text-secondary)',
       }}>
         {"Hello! I'm "}
-        <span style={{ color: 'var(--accent)', fontWeight: 600 }}>Jordan Wood</span>
+        <span style={{ color: 'var(--accent)', fontWeight: 600 }}>Jordan</span>
         {'. '}
-        {'I got into software engineering the way a lot of people do: through '}
+        {'Like a lot of developers, I got my start through '}
         <span style={{ color: 'var(--syntax-green)' }}>gaming</span>
-        {'. As a gamer, I became fascinated by how games were built, and that curiosity eventually pulled me into coding. What started as an interest in '}
+        {'. I became curious about how the things I played were actually built, and that curiosity pulled me into coding. What began as an interest in '}
         <span style={{ color: 'var(--syntax-orange)' }}>game development</span>
-        {' grew into a genuine passion for software—the challenges it presents, the creativity it demands, and the fact that there\'s rarely just one right answer. That last part still excites me. The same problem can often be solved a dozen different ways, and I find that endlessly interesting.'}
+        {' grew into a genuine passion for software: the challenges it presents, the creativity it demands, and the fact that there\'s rarely just one right answer. That last part still excites me. The same problem can often be solved a dozen different ways, and I find that endlessly interesting.'}
         <br /><br />
         {'What excites me most is '}
         <span style={{ color: 'var(--accent)' }}>frontend development</span>
-        {': building interfaces that people interact with every day and making those experiences intuitive, efficient, and enjoyable. I\'m currently interning at '}
+        {': building interfaces that people interact with every day and making those experiences intuitive, efficient, and enjoyable. Most recently, I interned at '}
         <span style={{ color: 'var(--syntax-green)', fontWeight: 600 }}>Pierce County</span>
-         {', where I\'m migrating legacy '}
+        {', where I migrated legacy '}
         <span style={{ color: 'var(--syntax-orange)' }}>AngularJS</span>
         {' applications to modern '}
         <span style={{ color: 'var(--syntax-orange)' }}>Angular 13</span>
         {' on the '}
         <span style={{ color: 'var(--accent)' }}>LINX justice platform</span>
-        {' — a production system used across Washington State\'s justice system. Contributing to a project with real-world impact has been my proudest professional achievement so far.'}
+        {', a production system used across Washington State\'s justice system. Contributing to a project with real-world impact is still my proudest professional achievement so far. Since then, I\'ve kept building, including projects that explore how '}
+        <span style={{ color: 'var(--syntax-green)' }}>AI and language models</span>
+        {' work under the hood.'}
         <br /><br />
-        {'I\'m looking for a team where I can continue growing, make meaningful contributions, and eventually become someone other developers look to—not just for technical expertise, but as a person worth learning from. Here\'s what I bring to that team:'}
-      </div>
+        {'I\'m now looking for a '}
+        <span style={{ color: 'var(--accent)', fontWeight: 600 }}>full-time role</span>
+        {' on a team where I can keep growing, make meaningful contributions, and eventually become someone other developers look to, not just for technical expertise, but as a person worth learning from. Here\'s what I bring to that team:'}
+        </div>
 
       {/* Skills */}
       <div style={{
@@ -285,7 +288,7 @@
 
        {[
   {
-    years: 'Feb 2026 – Present',
+    years: 'Feb 2026 – July 2026',
     role: 'Software Engineer Intern',
     company: 'Pierce County',
     bullets: [
@@ -297,15 +300,16 @@
     tags: ['Angular 13', 'TypeScript', 'JavaScript', 'RxJS', 'AngularJS', 'Bitbucket', 'Version Control', 'CI/CD Pipelines'],
   },
   {
-    years: 'Jun 2024 – Sep 2024',
-    role: 'IT Support Intern',
-    company: 'FusionTek',
+    years: 'April 2021 – December 2023',
+    role: 'Manager',
+    company: 'Timberline Development, LLC',
     bullets: [
-      'Diagnosed and resolved hardware, software, and network issues across a multi-client MSP environment, applying structured troubleshooting methodologies to identify root causes and implement reliable solutions.',
-      'Managed and tracked incident tickets in Jira through defined escalation workflows, ensuring consistent process compliance and accurate documentation of resolutions to support team knowledge sharing.',
-      'Provisioned and imaged devices for onboarding and refresh cycles, verifying consistent system configuration against established standards and minimizing operational downtime across client environments.',
+      'Designed and built a JavaScript data-reconciliation tool that parsed JSON inventory records, applied matching logic against the store\'s in-house Excel manifest, and automatically flagged/corrected mismatches, reducing inventory discrepancies by more than 75%.',
+      'Automated recurring data-entry and reporting workflows with custom scripts, eliminating about 40 hours of manual work per week.',
+      'Diagnosed and resolved issues across the store\'s POS systems, network, and hardware, minimizing downtime for business-critical operations.',
+      'Identified operational bottlenecks, designed and deployed automated Bash/PowerShell scripts, led a team of 10, and streamlined financial reconciliation in a regulated environment, resulting in faster month-end closing and reduced manual errors.'
     ],
-    tags: ['Jira', 'IT Support', 'Troubleshooting', 'Networking', 'Active Directory', 'Network Configuration', 'Device Imaging']
+    tags: ['JavaScript', 'JSON', 'Excel', 'Process Automation', 'Data Reconciliation', 'Inventory Management', 'Team Leadership', 'POS Troubleshooting', 'Network Troubleshooting']
   },
         ].map((job, i) => (
           <div key={i} style={{
