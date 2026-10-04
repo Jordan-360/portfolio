@@ -3,6 +3,7 @@ import { VscFolder, VscPerson, VscMail, VscFile, VscGlobe } from 'react-icons/vs
 import { SiGithub, SiGmail } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
 import profilePhoto from '../../assets/cropped phot.jpeg'
+import resumePDF from '../../assets/resume.pdf'
 
 
 const ROLES = [
@@ -202,7 +203,7 @@ export default function Home({ onFileOpen }) {
         {[
           { label: 'GitHub',   href: 'https://github.com/Jordan-360',         icon: <SiGithub />,  color: '#ffffff' },
           { label: 'LinkedIn', href: 'https://linkedin.com/in/jordanwood526', icon: <FaLinkedin />,  color: '#0a66c2' },
-          { label: 'Resume',   href: 'src/assets/resume.pdf',                 icon: <VscFile />,   color: '#4fc3f7' },
+          { label: 'Resume',   href: resumePDF,                               icon: <VscFile />,   color: '#4fc3f7' },
           { label: 'Gmail',    href: 'mailto:jordanwood159@gmail.com',        icon: <SiGmail />,   color: '#EA4335' },
         ].map(link => (
           
