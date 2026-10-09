@@ -7,6 +7,12 @@ import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc
 
+const pdfOptions = {
+  cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+  cMapPacked: true,
+  standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
+}
+
 export default function Resume() {
   const [numPages, setNumPages] = useState(null)
   const [error, setError] = useState(null)
@@ -94,6 +100,7 @@ export default function Resume() {
         ) : (
           <Document
             file={resumePDF}
+            options={pdfOptions}
             onLoadSuccess={({ numPages }) => setNumPages(numPages)}
             onLoadError={(err) => setError(err.message)}
             loading={
