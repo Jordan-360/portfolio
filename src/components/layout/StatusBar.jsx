@@ -10,10 +10,10 @@ export default function StatusBar({ activeFile }) {
       </div>
       <div className="statusbar__right">
         <span className="statusbar__item">{activeFile}</span>
-        <span className="statusbar__item">TypeScript React</span>
-        <span className="statusbar__item">UTF-8</span>
-        <span className="statusbar__item">Prettier</span>
-        <span className="statusbar__item">Aahana Dark</span>
+        <span className="statusbar__item statusbar__item--hide-mobile">TypeScript React</span>
+        <span className="statusbar__item statusbar__item--hide-mobile">UTF-8</span>
+        <span className="statusbar__item statusbar__item--hide-mobile">Prettier</span>
+        <span className="statusbar__item statusbar__item--hide-mobile">Aahana Dark</span>
         <span className="statusbar__item">{time}</span>
       </div>
     </div>

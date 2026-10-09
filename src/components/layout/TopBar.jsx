@@ -34,7 +34,7 @@ export default function TopBar({ onSearchClick }) {
           border: '1px solid var(--border)',
           borderRadius: '6px',
           padding: '3px 12px',
-          minWidth: '300px',
+          minWidth: 'min(300px, 45vw)',
           justifyContent: 'space-between',
           cursor: 'pointer',
         }}
@@ -52,7 +52,7 @@ export default function TopBar({ onSearchClick }) {
           <span style={{ color: 'var(--text-tertiary)' }}>:</span>
           <span style={{ color: 'var(--text-primary)' }}>portfolio</span>
         </div>
-        <div style={{
+        <div className="titlebar__shortcut" style={{
           fontSize: '11px',
           color: 'var(--text-tertiary)',
           fontFamily: 'var(--font-sans)',

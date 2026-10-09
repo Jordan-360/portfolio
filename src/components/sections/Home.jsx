@@ -54,7 +54,7 @@ export default function Home({ onFileOpen }) {
       </div>
 
       {/* Name + Photo row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '40px', marginBottom: '24px' }}>
+      <div className="home-hero" style={{ display: 'flex', alignItems: 'center', gap: '40px', marginBottom: '24px' }}>
         <div>
           <h1 style={{
             fontFamily: 'var(--font-heading)',
@@ -80,6 +80,7 @@ export default function Home({ onFileOpen }) {
 
         {/* Photo */}
         <img
+          className="home-hero__photo"
           src={profilePhoto}
           alt="Jordan Wood"
           style={{

@@ -120,7 +120,7 @@ export default function Projects() {
             </div>
 
             {/* Grid */}
-            <div style={{
+            <div className="projects-grid" style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
                 gap: '16px',

@@ -108,7 +108,7 @@ export default function Contact() {
       </div>
 
       {/* Two column layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
+      <div className="contact-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
 
         {/* Left — Find Me On */}
         <div>

@@ -277,3 +277,108 @@
 .statusbar__item:hover {
   background: rgba(255,255,255,0.15);
 }
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  /* Sidebar overlays content on mobile */
+  .sidebar {
+    position: fixed;
+    top: calc(var(--titlebar-height) + var(--menubar-height));
+    left: var(--activitybar-width);
+    bottom: var(--statusbar-height);
+    width: min(240px, calc(100vw - var(--activitybar-width)));
+    z-index: 50;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Backdrop for sidebar overlay */
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 49;
+  }
+
+  /* Reduce editor padding */
+  .editor-content {
+    padding: 16px;
+  }
+
+  /* MenuBar: horizontal scroll on mobile */
+  .menubar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .menubar::-webkit-scrollbar {
+    display: none;
+  }
+  .menubar__item {
+    flex-shrink: 0;
+  }
+
+  /* Breadcrumb: compact */
+  .breadcrumb {
+    overflow: hidden;
+    padding: 0 8px;
+  }
+
+  /* TabBar: horizontal scroll */
+  .tabbar {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* StatusBar: hide non-essential items on mobile */
+  .statusbar__item--hide-mobile {
+    display: none;
+  }
+
+  /* TopBar: hide keyboard shortcut hint */
+  .titlebar__shortcut {
+    display: none;
+  }
+
+  /* Home hero: stack name and photo vertically */
+  .home-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px !important;
+  }
+  .home-hero__photo {
+    width: clamp(120px, 40vw, 160px) !important;
+    height: clamp(120px, 40vw, 160px) !important;
+    align-self: center;
+  }
+
+  /* Projects: single column grid */
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Contact: single column layout */
+  .contact-layout {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* Backdrop hidden by default (shown only via media query above) */
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .editor-content {
+    padding: 12px;
+  }
+
+  .statusbar__left .statusbar__item:last-child {
+    display: none;
+  }
+}

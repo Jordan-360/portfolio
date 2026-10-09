@@ -20,7 +20,7 @@ import MockTerminal from './components/ui/MockTerminal'
 export default function App() {
   const [activeFile, setActiveFile] = useState('home.tsx')
   const [openTabs, setOpenTabs] = useState(['home.tsx'])
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768)
   const [paletteOpen, setPaletteOpen] = useState(false)
 
   function openFile(file) {
@@ -106,6 +106,9 @@ export default function App() {
           onEasterEgg={() => setKonamiActivated(true)}
           onRunDebug={() => setTerminalRunning(true)}
         />
+        {sidebarOpen && (
+          <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+        )}
         <Sidebar
           activeFile={activeFile}
           onFileClick={openFile}
