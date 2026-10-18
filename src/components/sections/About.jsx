@@ -287,6 +287,17 @@
         </h2>
 
        {[
+    {
+    years: 'July 2026 – Present',
+    role: 'AI Trainer - Software Development',
+    company: 'Handshake AI',
+    bullets: [
+      'Developed and evaluated software engineering prompts to stress-test large language models, identifying failures in reasoning, logic, and code correctness.',
+      'Audited and corrected model-generated responses, including Java and JavaScript code, writing detailed justifications that turned flawed outputs into high-quality training data.',
+      'Improved AI performance on complex programming tasks through expert review and feedback, completing independent, deadline-driven work to project quality standards.',
+    ],
+    tags: ['AI Model Training', 'LLM Evaluation', 'RLHF', 'RxJS', 'Prompt Engineering', 'Response Rating & Ranking', 'Data Annotation', 'Quality Assurance'],
+  },
   {
     years: 'Feb 2026 – July 2026',
     role: 'Software Engineer Intern',
