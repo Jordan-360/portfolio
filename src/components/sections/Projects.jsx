@@ -15,11 +15,21 @@ const PROJECTS = [
         emoji: '📋',
         categories: ['AI / RAG', 'TYPESCRIPT', 'NODE.JS'],
         title: 'RAG-Powered Patch Notes Assistant',
-        description: 'Built because I hate reading patch notes. Patch TL;DR takes long Overwatch patch notes and turns them into quick, easy-to-read answers, using retrieval-augmented generation (RAG) so every answer cites the exact part of the patch notes it came from.',
+        description: 'Built because I hate reading patch notes. This patch notes assistant takes long Overwatch patch notes and turns them into quick, easy-to-read answers, using retrieval-augmented generation (RAG) so every answer cites the exact part of the patch notes it came from.',
         tags: ['TypeScript', 'Node.js', 'RAG', 'LLM', 'Citations'],
         github: 'https://github.com/Jordan-360/patch-notes-assistant',
         live: null,
         color: '#00f815',
+    },
+    {
+        emoji: '🎮',
+        categories: ['WEB APP', 'JAVASCRIPT', 'HTML', 'CSS', 'VERCEL'],
+        title: 'Mobile Web Games Application',
+        description: 'Three touch-friendly games (Tic-Tac-Toe, Hangman, and Memory Match) designed for playing on a phone at the table. Written in vanilla JavaScript with no frameworks, with light and dark themes and a shared stylesheet across games.',
+        tags: ['JavaScript', 'HTML', 'CSS', 'Vercel'],
+        github: 'https://github.com/Jordan-360/restaurant-games',
+        live: 'https://restaurant-games.vercel.app/',
+        color: '#7100f3',
     },
     {
         emoji: '🏦',
@@ -228,8 +238,16 @@ export default function Projects() {
                                                 alignItems: 'center',
                                                 gap: '6px',
                                             }}
+                                            onMouseEnter={e => {
+                                            e.currentTarget.style.color = project.color
+                                            e.currentTarget.style.borderColor = project.color
+                                        }}
+                                        onMouseLeave={e => {
+                                            e.currentTarget.style.color = 'var(--text-secondary)'
+                                            e.currentTarget.style.borderColor = 'var(--border)'
+                                        }}
                                         >
-                                            Live ↗
+                                            Live Demo
                                         </a>
                                     )}
                                 </div>
