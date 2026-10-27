@@ -32,6 +32,16 @@ const PROJECTS = [
         color: '#7100f3',
     },
     {
+        emoji: '📋',
+        categories: ['WEB APP', 'REACT', 'TYPESCRIPT'],
+        title: 'Job Tracker',
+        description: 'A React and TypeScript app for organizing a job search: add, edit, and track applications in one place. Data is saved in the browser with a custom useLocalStorage hook and can be exported or imported as JSON, so nothing is lost when switching devices.',
+        tags: ['React', 'TypeScript', 'Vite', 'localStorage'],
+        github: 'https://github.com/Jordan-360/JobTracker',
+        live: 'https://jw-jobtracker.vercel.app',
+        color: '#f9fc4e',
+    },
+    {
         emoji: '🏦',
         categories: ['FULL STACK', 'JAVA', 'REACT'],
         title: 'Full-Stack Banking Application',
@@ -49,7 +59,7 @@ const PROJECTS = [
         tags: ['JavaScript', 'MLB Stats API', 'NewsAPI', 'Python', 'HTML', 'CSS'],
         github: 'https://github.com/Jordan-360/MLBAPI',
         live: null,
-        color: '#dcdcaa',
+        color: '#fdfdfd',
     },
     {
         emoji: '💻',
