@@ -1,9 +1,9 @@
 ﻿export default function About() {
   const skills = {
     Languages: ['Java', 'Python', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'SQL'],
-    'Frameworks/Tools': ['Spring Boot', 'React.js', 'Angular 13', 'AngularJS','PyTorch', 'Ollama', 'RxJS', 'REST APIs', 'MySQL', 'Node.js', 'Git/GitHub', 'Bitbucket', 'Vite'],
-    Concepts: ['OOP', 'SDLC', 'Agile/Scrum', 'Component-Based Architecture', 'API Integration', 'MVC', 'Unit Testing', 'Data Structures & Algorithms', 'System Integration', 'LLMs', 'Generative AI', 'CUDA', 'Machine Learning'],
-    'CI/CD & DevOps': ['Jenkins', 'CI/CD Pipelines', 'Git Branching', 'Automated Build Verification', 'Bash/PowerShell'],
+    'Frameworks/Tools': ['Spring Boot', 'React.js', 'Angular 13', 'AngularJS','PyTorch', 'Ollama', 'RxJS', 'REST APIs', 'MySQL', 'Node.js', 'Git/GitHub', 'Bitbucket', 'Vite', 'Jira', 'Confluence', 'VS Code', 'Chrome DevTools'],
+    'Concepts': ['OOP', 'SDLC', 'Agile/Scrum', 'API Integration', 'Unit Testing', 'Data Structures & Algorithms', 'System Integration', 'LLMs', 'Generative AI', 'Machine Learning'],
+    'CI/CD & DevOps': ['Jenkins', 'CI/CD Pipelines', 'GitHub Actions', 'Linux', 'Bash/PowerShell'],
   }
 
   return (
@@ -175,15 +175,20 @@
             degree: 'B.S. Software Development',
             school: 'Grand Canyon University',
             location: 'Phoenix, AZ',
-            details: 'Coursework: Data Structures & Algorithms, Operating Systems, Computer Networks, Computer Architecture',
-            tags: ['Java', 'OOP', 'Data Structures', 'Software Engineering'],
+            details: [
+              'GPA: 3.15',
+              'Coursework: Data Structures & Algorithms, Operating Systems, Computer Networks, Computer Architecture',
+            ],            tags: ['Java', 'OOP', 'Data Structures', 'Software Engineering'],
           },
           {
             years: 'Sep 2019 – Jun 2021',
             degree: 'A.A. Computer Science',
             school: 'Pierce College',
             location: 'Puyallup, WA',
-            details: 'Coursework: Object-Oriented Programming, Web Development, Database Management, Computer Architecture',
+            details: [
+              'GPA: 3.50',
+              'Coursework: Object-Oriented Programming, Web Development, Database Management, Computer Architecture',
+            ],
             tags: ['OOP', 'Web Development', 'Database Management', 'Computer Architecture'],
           },
         ].map((edu, i) => (
@@ -246,7 +251,9 @@
                 lineHeight: '1.6',
                 marginBottom: '12px',
               }}>
-                {edu.details}
+                {edu.details.map((detail, i) => (
+                  <div key={i}>{detail}</div>
+                ))}
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {edu.tags.map(tag => (
@@ -292,9 +299,9 @@
     role: 'AI Trainer - Software Development',
     company: 'Handshake AI',
     bullets: [
-      'Developed and evaluated software engineering prompts to stress-test large language models, identifying failures in reasoning, logic, and code correctness.',
+      'Evaluate large language model responses for factual accuracy, reasoning, and instruction-following against detailed project guidelines, flagging failures that feed back into model training.',
       'Audited and corrected model-generated responses, including Java and JavaScript code, writing detailed justifications that turned flawed outputs into high-quality training data.',
-      'Improved AI performance on complex programming tasks through expert review and feedback, completing independent, deadline-driven work to project quality standards.',
+      'Independently manage deadline-driven tasks across multiple AI training projects, consistently delivering accurate, high-quality work on schedule.',
     ],
     tags: ['AI Model Training', 'LLM Evaluation', 'RLHF', 'RxJS', 'Prompt Engineering', 'Response Rating & Ranking', 'Data Annotation', 'Quality Assurance'],
   },
@@ -303,22 +310,22 @@
     role: 'Software Engineer Intern',
     company: 'Pierce County',
     bullets: [
-      'Translated stakeholder requirements into a component-based architecture and migrated production AngularJS applications to Angular 13 using TypeScript and Angular CLI, delivering a more maintainable codebase and reducing future development effort.',
-      'Refactored asynchronous service logic and parallel data-fetching with RxJS, reducing API response time and increasing system reliability while improving integration with backend REST APIs.',
-      'Debugged and resolved UI component and service-layer issues using Chrome DevTools and unit tests; collaborated with senior engineers through structured Bitbucket code reviews to consistently meet enterprise development standards.',
-      'Developed and maintained software documentation and architectural patterns per established playbook conventions, supporting long-term maintainability and reducing onboarding friction for future developers.',
+      'Migrated 3 production pages from end-of-life AngularJS to Angular 13 and TypeScript on LINX, the county\'s internal justice platform that tracks individuals from arrest through booking for law enforcement and court users.',
+      'Rebuilt the inmate Release workflow, a multi-tab screen opened from an inmate\'s record, as Angular components with RxJS data services integrated with backend REST APIs.',
+      'Converted the Journal Entry Checkout page, which tracks logged-in sessions across admin, supervisor, and judicial roles; converted a Word document-merge feature used to generate case documents.',
+      'Debugged UI and service-layer issues with Chrome DevTools and unit tests, and shipped all changes through Bitbucket code reviews with senior engineers.',
     ],
     tags: ['Angular 13', 'TypeScript', 'JavaScript', 'RxJS', 'AngularJS', 'Bitbucket', 'Version Control', 'CI/CD Pipelines'],
   },
   {
     years: 'April 2021 – December 2023',
-    role: 'Manager',
+    role: 'Store Manager',
     company: 'Timberline Development, LLC',
     bullets: [
-      'Designed and built a JavaScript data-reconciliation tool that parsed JSON inventory records, applied matching logic against the store\'s in-house Excel manifest, and automatically flagged/corrected mismatches, reducing inventory discrepancies by more than 75%.',
-      'Automated recurring data-entry and reporting workflows with custom scripts, eliminating about 40 hours of manual work per week.',
-      'Diagnosed and resolved issues across the store\'s POS systems, network, and hardware, minimizing downtime for business-critical operations.',
-      'Identified operational bottlenecks, designed and deployed automated Bash/PowerShell scripts, led a team of 10, and streamlined financial reconciliation in a regulated environment, resulting in faster month-end closing and reduced manual errors.'
+      'Built a JavaScript tool that processed hourly JSON sales reports and automatically deducted sold quantities from the store\'s Excel inventory manifest, covering 100+ products tracked by multiple Washington State compliance barcodes.',
+      'Replaced manual hourly inventory reconciliation with an automated process, reducing discrepancies by more than 75% and saving approximately 40 staff hours per week.',
+      'Supervised a team of up to 10 and led financial reconciliations, ensuring accurate, compliant reporting in a state-regulated industry.',
+      'Diagnosed and resolved POS, network, printer, and hardware issues, restoring operations quickly and preventing prolonged business disruptions.'
     ],
     tags: ['JavaScript', 'JSON', 'Excel', 'Process Automation', 'Data Reconciliation', 'Inventory Management', 'Team Leadership', 'POS Troubleshooting', 'Network Troubleshooting']
   },
