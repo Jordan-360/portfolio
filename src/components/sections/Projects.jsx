@@ -2,6 +2,17 @@
 
 const PROJECTS = [
     {
+        emoji: '🏈',
+        categories: ['WEB APP', 'REACT', 'FANTASY FOOTBALL', 'POKÉMON', 'NODE.JS'],
+        title: 'Fantasy Pokémon',
+        description:
+        'A fantasy football game where all 704 NFL starters are paired with a Pokémon. Draft against 9 CPU managers in a snake draft, set your lineup on a football field, work the waiver wire, and play a full season scored from real NFL stats, with Pokémon twists like type matchups and evolutions. The CPU drafts using value over replacement, a Node data pipeline pulls weekly stats from public sources, and a simulator plays an entire league to check the rules hold up.',
+        tags: ['React', 'JavaScript', 'Responsive Design', 'Game Logic', 'Data Pipeline', 'Vercel'],
+        github: 'https://github.com/Jordan-360/FantasyPokemonV2',
+        live: 'https://fantasy-pokemon-v2.vercel.app/',
+        color: '#ffff09',
+    },
+    {
         emoji: '🧠',
         categories: ['AI / ML', 'PYTHON', 'PYTORCH'],
         title: 'TinyGPT',
@@ -39,7 +50,7 @@ const PROJECTS = [
         tags: ['React', 'TypeScript', 'Vite', 'localStorage'],
         github: 'https://github.com/Jordan-360/JobTracker',
         live: 'https://jw-jobtracker.vercel.app',
-        color: '#f9fc4e',
+        color: '#eefcb4',
     },
     {
         emoji: '🏦',
