@@ -1,9 +1,9 @@
 ﻿export default function About() {
   const skills = {
     Languages: ['Java', 'Python', 'JavaScript', 'TypeScript', 'HTML5', 'CSS3', 'SQL'],
-    'Frameworks/Tools': ['Spring Boot', 'React.js', 'Angular 13', 'AngularJS','PyTorch', 'Ollama', 'RxJS', 'REST APIs', 'MySQL', 'Node.js', 'Git/GitHub', 'Bitbucket', 'Vite', 'Jira', 'Confluence', 'VS Code', 'Chrome DevTools'],
-    'Concepts': ['OOP', 'SDLC', 'Agile/Scrum', 'API Integration', 'Unit Testing', 'Data Structures & Algorithms', 'System Integration', 'LLMs', 'Generative AI', 'Machine Learning'],
-    'CI/CD & DevOps': ['Jenkins', 'CI/CD Pipelines', 'GitHub Actions', 'Linux', 'Bash/PowerShell'],
+    'Frameworks & Libraries': ['React', 'Angular', 'AngularJS', 'Node.js', 'Spring Boot', 'RxJS', 'PyTorch'],
+    'Tools & Platforms': ['Git/GitHub', 'Bitbucket', 'Jenkins', 'REST APIs', 'MySQL', 'Jira', 'Confluence', 'Vite', 'Vercel', 'Chrome DevTools', 'Linux'],
+    'Concepts': ['OOP', 'Agile/Scrum', 'SDLC', 'CI/CD', 'Unit Testing', 'Data Structures & Algorithms', 'Machine Learning', 'Generative AI (RAG)'],
   }
 
   return (
@@ -177,8 +177,9 @@
             location: 'Phoenix, AZ',
             details: [
               'GPA: 3.15',
-              'Coursework: Data Structures & Algorithms, Operating Systems, Computer Networks, Computer Architecture',
-            ],            tags: ['Java', 'OOP', 'Data Structures', 'Software Engineering'],
+              'Coursework: Algorithms & Data Structures, Operating Systems Fundamentals, Database Design & Development, JavaScript Web Application Development, Cloud Computing, Application Security Foundations, Programming in Java I–III, Programming in C# I–III, Senior Project I & II',
+            ],
+            tags: ['Java', 'C#', 'Algorithms', 'Systems Fundamentals'],
           },
           {
             years: 'Sep 2019 – Jun 2021',
@@ -187,9 +188,9 @@
             location: 'Puyallup, WA',
             details: [
               'GPA: 3.50',
-              'Coursework: Object-Oriented Programming, Web Development, Database Management, Computer Architecture',
+              'Coursework: Computer Science I & II, Introduction to Computer Information Systems, Calculus I & II, Introduction to Statistics',
             ],
-            tags: ['OOP', 'Web Development', 'Database Management', 'Computer Architecture'],
+            tags: ['OOP', 'Web Development', 'Databases'],
           },
         ].map((edu, i) => (
           <div key={i} style={{
@@ -299,9 +300,9 @@
     role: 'AI Trainer - Software Development',
     company: 'Handshake AI',
     bullets: [
-      'Evaluate large language model responses for factual accuracy, reasoning, and instruction-following against detailed project guidelines, flagging failures that feed back into model training.',
-      'Audited and corrected model-generated responses, including Java and JavaScript code, writing detailed justifications that turned flawed outputs into high-quality training data.',
-      'Independently manage deadline-driven tasks across multiple AI training projects, consistently delivering accurate, high-quality work on schedule.',
+      'Evaluate and correct large language model outputs for accuracy, reasoning, and instruction-following, identifying failure cases that are used to retrain and improve the models.',
+      'Create original video and prompt data for multimodal AI training, producing submissions that meet strict quality and formatting standards for acceptance.',
+      'Selected for multiple AI training projects through competitive screening, applying a software development background to catch technical and logic errors in AI responses.',
     ],
     tags: ['AI Model Training', 'LLM Evaluation', 'RLHF', 'RxJS', 'Prompt Engineering', 'Response Rating & Ranking', 'Data Annotation', 'Quality Assurance'],
   },
@@ -310,10 +311,10 @@
     role: 'Software Engineer Intern',
     company: 'Pierce County',
     bullets: [
-      'Migrated 3 production pages from end-of-life AngularJS to Angular 13 and TypeScript on LINX, the county\'s internal justice platform that tracks individuals from arrest through booking for law enforcement and court users.',
-      'Rebuilt the inmate Release workflow, a multi-tab screen opened from an inmate\'s record, as Angular components with RxJS data services integrated with backend REST APIs.',
-      'Converted the Journal Entry Checkout page, which tracks logged-in sessions across admin, supervisor, and judicial roles; converted a Word document-merge feature used to generate case documents.',
-      'Debugged UI and service-layer issues with Chrome DevTools and unit tests, and shipped all changes through Bitbucket code reviews with senior engineers.',
+      'Migrated 3 production pages from end-of-life AngularJS to Angular 13 and TypeScript on LINX, the county\'s internal justice platform used by Pierce County Superior Court and law enforcement to manage records from arrest through booking and beyond.',
+      'Rebuilt the inmate Release workflow, a multi-tab screen opened from an inmate\'s record, as Angular components with RxJS data services connected to backend REST APIs.',
+      'Converted the Journal Entry Checkout page, which tracks logged-in sessions across admin, supervisor, and judicial roles, and a Word document-merge feature used to generate case documents.',
+      'Debugged UI and service-layer issues with Chrome DevTools and unit tests, shipping all changes through Bitbucket code reviews with senior engineers.',
     ],
     tags: ['Angular 13', 'TypeScript', 'JavaScript', 'RxJS', 'AngularJS', 'Bitbucket', 'Version Control', 'CI/CD Pipelines'],
   },
