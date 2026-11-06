@@ -3,7 +3,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 100vw;
+  height: 100dvh; /* excludes mobile browser toolbars, so the status bar stays visible */
+  width: 100%;
   overflow: hidden;
   background: var(--bg-primary);
 }
@@ -17,8 +18,8 @@
   padding: 0 12px;
   gap: 8px;
   flex-shrink: 0;
+  position: relative;
   border-bottom: 1px solid var(--border);
-  -webkit-app-region: drag;
 }
 
 .titlebar__dots {
@@ -32,9 +33,68 @@
   border-radius: 50%;
 }
 
+.titlebar__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1;
+}
+
+.titlebar__dot span {
+  visibility: hidden;
+}
+
+.titlebar__dots:hover .titlebar__dot span {
+  visibility: visible;
+}
+
 .titlebar__dot--red    { background: #ff5f57; }
 .titlebar__dot--yellow { background: #febc2e; }
 .titlebar__dot--green  { background: #28c840; }
+
+.titlebar__search {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: min(300px, 45vw);
+  max-width: calc(100% - 160px);
+  padding: 3px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.titlebar__search:hover {
+  border-color: var(--text-tertiary);
+}
+
+.titlebar__search-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.titlebar__shortcut {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  background: var(--bg-tertiary);
+  padding: 1px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
 
 .titlebar__title {
   flex: 1;
@@ -61,13 +121,77 @@
   color: var(--text-primary);
   font-family: var(--font-sans);
   padding: 2px 8px;
+  border: none;
   border-radius: 3px;
+  background: transparent;
   cursor: pointer;
   user-select: none;
+  flex-shrink: 0;
 }
 
-.menubar__item:hover {
+.menubar__item:hover,
+.menubar__item--open {
   background: var(--bg-hover);
+}
+
+/* ── Menu dropdown ── */
+.menu-dropdown {
+  position: fixed;
+  min-width: min(220px, calc(100vw - 16px));
+  max-height: calc(100dvh - 80px);
+  overflow-y: auto;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  padding: 4px 0;
+  font-family: var(--font-sans);
+}
+
+.menu-dropdown__divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+.menu-dropdown__section {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  padding: 6px 16px 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.menu-dropdown__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  padding: 6px 16px;
+  font-family: inherit;
+  font-size: 13px;
+  text-align: left;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-dropdown__item:hover:not(:disabled) {
+  background: var(--bg-hover);
+}
+
+.menu-dropdown__item:disabled {
+  color: var(--text-tertiary);
+  opacity: 0.5;
+  cursor: default;
+}
+
+.menu-dropdown__shortcut {
+  font-size: 11px;
+  color: var(--text-tertiary);
 }
 
 /* ── Main Body (activity bar + sidebar + editor) ── */
@@ -96,16 +220,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none;
   border-radius: 4px;
+  background: transparent;
   cursor: pointer;
   color: var(--text-secondary);
-  font-size: 20px;
+  font-size: 24px;
+  line-height: 1;
   transition: color 0.15s;
   position: relative;
 }
 
 .activitybar__icon:hover {
   color: var(--text-primary);
+}
+
+.activitybar__icon--static {
+  cursor: default;
 }
 
 
@@ -140,6 +271,11 @@
 }
 
 .sidebar__file {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -213,6 +349,40 @@
   border-top: 1px solid var(--accent);
 }
 
+.tabbar__close {
+  margin-left: -2px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  opacity: 0.3;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tabbar__close:hover {
+  opacity: 1;
+  color: var(--text-primary);
+  border-color: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* No hover on touchscreens, so keep the close button clearly visible */
+@media (hover: none) {
+  .tabbar__close {
+    opacity: 0.7;
+    width: 24px;
+    height: 24px;
+  }
+}
+
 /* ── Breadcrumb ── */
 .breadcrumb {
   height: 22px;
@@ -235,7 +405,28 @@
 .editor-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
   padding: 24px 48px;
+}
+
+/* Sidebar overlay backdrop (only rendered on mobile) */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 49;
+}
+
+/* Keyboard focus ring for the IDE chrome buttons */
+.menubar__item:focus-visible,
+.menu-dropdown__item:focus-visible,
+.activitybar__icon:focus-visible,
+.sidebar__file:focus-visible,
+.tabbar__close:focus-visible,
+.titlebar__search:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: -1px;
 }
 
 /* ── Status Bar ── */
@@ -291,16 +482,13 @@
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
   }
 
-  /* Backdrop for sidebar overlay */
-  .sidebar-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 49;
+  /* Bigger tap targets in the file list */
+  .sidebar__file {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 14px;
   }
 
-  /* Reduce editor padding */
   .editor-content {
     padding: 16px;
   }
@@ -315,33 +503,42 @@
   .menubar::-webkit-scrollbar {
     display: none;
   }
-  .menubar__item {
-    flex-shrink: 0;
-  }
 
-  /* Breadcrumb: compact */
   .breadcrumb {
     overflow: hidden;
+    white-space: nowrap;
     padding: 0 8px;
   }
 
-  /* TabBar: horizontal scroll */
   .tabbar {
-    overflow-x: auto;
     scrollbar-width: none;
   }
   .tabbar::-webkit-scrollbar {
     display: none;
   }
+  .tabbar__tab {
+    padding: 0 10px;
+  }
 
-  /* StatusBar: hide non-essential items on mobile */
   .statusbar__item--hide-mobile {
     display: none;
   }
 
-  /* TopBar: hide keyboard shortcut hint */
   .titlebar__shortcut {
     display: none;
+  }
+
+  .titlebar__search {
+    min-width: 0;
+    max-width: calc(100% - 2 * 84px);
+  }
+
+  /* iOS Safari zooms the page when focusing inputs under 16px */
+  .palette-input {
+    font-size: 16px !important;
+  }
+  .palette-footer {
+    display: none !important;
   }
 
   /* Home hero: stack name and photo vertically */
@@ -355,22 +552,6 @@
     height: clamp(120px, 40vw, 160px) !important;
     align-self: center;
   }
-
-  /* Projects: single column grid */
-  .projects-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  /* Contact: single column layout */
-  .contact-layout {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
-  }
-}
-
-/* Backdrop hidden by default (shown only via media query above) */
-.sidebar-backdrop {
-  display: none;
 }
 
 @media (max-width: 480px) {
@@ -378,7 +559,11 @@
     padding: 12px;
   }
 
-  .statusbar__left .statusbar__item:last-child {
+  .statusbar__item--hide-xs {
+    display: none;
+  }
+
+  .titlebar__search-owner {
     display: none;
   }
 }

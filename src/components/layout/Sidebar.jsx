@@ -1,30 +1,21 @@
 import FileIcon from '../ui/FileIcon'
+import { FILES } from '../../files'
 
-const FILES = [
-  'home.tsx',
-  'about.html',
-  'projects.js',
-  'contact.css',
-  'resume.pdf',
-  'README.md',
-]
-
-export default function Sidebar({ activeFile, onFileClick, isOpen }) {
-  if (!isOpen) return null
-
+export default function Sidebar({ activeFile, onFileClick }) {
   return (
-    <div className="sidebar">
+    <nav className="sidebar" aria-label="Portfolio files">
       <div className="sidebar__label">Portfolio</div>
-      {FILES.map(file => (
-        <div
-          key={file}
-          className={`sidebar__file ${activeFile === file ? 'sidebar__file--active' : ''}`}
-          onClick={() => onFileClick(file)}
+      {FILES.map(({ name }) => (
+        <button
+          key={name}
+          type="button"
+          className={`sidebar__file ${activeFile === name ? 'sidebar__file--active' : ''}`}
+          onClick={() => onFileClick(name)}
         >
-          <FileIcon filename={file} />
-          {file}
-        </div>
+          <FileIcon filename={name} />
+          {name}
+        </button>
       ))}
-    </div>
+    </nav>
   )
 }

@@ -1,15 +1,31 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import MenuDropdown from '../ui/MenuDropdown'
+import { FILES } from '../../files'
 
-export default function MenuBar({ openTabs, activeFile, onFileOpen, onTabClose, onCloseAllTabs, onPaletteOpen, onResumeDownload }) {
-  console.log('onCloseAllTabs:', onCloseAllTabs)
+function changeZoom(delta) {
+  const current = parseFloat(document.body.style.zoom || 1)
+  document.body.style.zoom = Math.min(2, Math.max(0.5, current + delta))
+}
+
+export default function MenuBar({
+  activeFile,
+  onFileOpen,
+  onTabClose,
+  onCloseAllTabs,
+  onPaletteOpen,
+  onToggleSidebar,
+  onRunTerminal,
+  onResumeDownload,
+}) {
+  // { name, anchorEl } of the open menu, or null
   const [openMenu, setOpenMenu] = useState(null)
+  const closeMenu = useCallback(() => setOpenMenu(null), [])
 
-  function toggleMenu(name) {
-    setOpenMenu(prev => (prev === name ? null : name))
+  function toggleMenu(name, anchorEl) {
+    setOpenMenu(prev => (prev?.name === name ? null : { name, anchorEl }))
   }
 
-  const recentFiles = ['home.tsx', 'about.html', 'projects.js', 'skills.json']
+  const recentFiles = ['home.tsx', 'about.html', 'projects.js', 'README.md']
     .filter(f => f !== activeFile)
 
   const MENUS = {
@@ -17,8 +33,8 @@ export default function MenuBar({ openTabs, activeFile, onFileOpen, onTabClose, 
       { label: 'New Tab', shortcut: 'Ctrl+T', onClick: () => onFileOpen('home.tsx') },
       { label: 'Open File…', shortcut: 'Ctrl+P', onClick: onPaletteOpen },
       { divider: true },
-      { label: 'Close Tab', shortcut: 'Ctrl+W', onClick: () => onTabClose(activeFile, { stopPropagation: () => { } }) },
-      { label: 'Close All Tabs', onClick: () => { console.log('close all clicked'); onCloseAllTabs() } },
+      { label: 'Close Tab', shortcut: 'Ctrl+W', onClick: () => onTabClose(activeFile) },
+      { label: 'Close All Tabs', onClick: onCloseAllTabs },
       { divider: true },
       { section: 'Open Recent' },
       ...recentFiles.map(f => ({ label: f, onClick: () => onFileOpen(f) })),
@@ -33,65 +49,55 @@ export default function MenuBar({ openTabs, activeFile, onFileOpen, onTabClose, 
     ],
     View: [
       { label: 'Command Palette', shortcut: 'Ctrl+P', onClick: onPaletteOpen },
-      { label: 'Toggle Sidebar', shortcut: 'Ctrl+B', disabled: true },
+      { label: 'Toggle Sidebar', shortcut: 'Ctrl+B', onClick: onToggleSidebar },
       { label: 'Toggle Terminal', shortcut: 'Ctrl+`', disabled: true },
       { divider: true },
       { label: 'Enter Full Screen', shortcut: 'F11', onClick: () => document.documentElement.requestFullscreen?.() },
-      { label: 'Zoom In', shortcut: 'Ctrl++', onClick: () => { document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) + 0.1) } },
-      { label: 'Zoom Out', shortcut: 'Ctrl+-', onClick: () => { document.body.style.zoom = (parseFloat(document.body.style.zoom || 1) - 0.1) } },
+      { label: 'Zoom In', shortcut: 'Ctrl++', onClick: () => changeZoom(0.1) },
+      { label: 'Zoom Out', shortcut: 'Ctrl+-', onClick: () => changeZoom(-0.1) },
       { label: 'Reset Zoom', onClick: () => { document.body.style.zoom = 1 } },
     ],
     Go: [
       { section: 'Files' },
-      { label: 'home.tsx', onClick: () => onFileOpen('home.tsx') },
-      { label: 'about.html', onClick: () => onFileOpen('about.html') },
-      { label: 'projects.js', onClick: () => onFileOpen('projects.js') },
-      { label: 'contact.css', onClick: () => onFileOpen('contact.css') },
-      { label: 'resume.pdf', onClick: () => onFileOpen('resume.pdf') },
-      { label: 'README.md', onClick: () => onFileOpen('README.md') },
+      ...FILES.map(({ name }) => ({ label: name, onClick: () => onFileOpen(name) })),
     ],
     Run: [
-      { label: 'Start Terminal', shortcut: 'Ctrl+`', disabled: true },
+      { label: 'Start Terminal', shortcut: 'Ctrl+`', onClick: onRunTerminal },
       { label: 'Run Last Command', disabled: true },
     ],
     Terminal: [
-      { label: 'New Terminal', shortcut: 'Ctrl+`', disabled: true },
+      { label: 'New Terminal', shortcut: 'Ctrl+`', onClick: onRunTerminal },
       { label: 'Toggle Terminal', shortcut: 'Ctrl+`', disabled: true },
       { label: 'Clear Terminal', disabled: true },
     ],
     Help: [
-      { label: 'GitHub', onClick: () => window.open('https://github.com/Jordan-360', '_blank') },
+      { label: 'GitHub', onClick: () => window.open('https://github.com/Jordan-360', '_blank', 'noopener') },
       { label: 'About', onClick: () => onFileOpen('README.md') },
     ],
   }
 
   return (
-    <div className="menubar">
+    <div className="menubar" onScroll={closeMenu}>
       {Object.keys(MENUS).map(name => (
-        <div key={name} style={{ position: 'relative' }}>
-          <div
-            className="menubar__item"
-            onMouseDown={(e) => {
-              e.stopPropagation()
-              toggleMenu(name)
-            }}
-            style={{
-              background: openMenu === name ? 'var(--bg-hover)' : 'transparent',
-            }}
-            onMouseEnter={e => {
-              if (openMenu !== name) e.currentTarget.style.background = 'var(--bg-hover)'
-            }}
-            onMouseLeave={e => {
-              if (openMenu !== name) e.currentTarget.style.background = 'transparent'
-            }}
-          >
-            {name}
-          </div>
-          {openMenu === name && (
-            <MenuDropdown items={MENUS[name]} onClose={() => setOpenMenu(null)} />
-          )}
-        </div>
+        <button
+          key={name}
+          type="button"
+          className={`menubar__item ${openMenu?.name === name ? 'menubar__item--open' : ''}`}
+          aria-haspopup="menu"
+          aria-expanded={openMenu?.name === name}
+          onClick={e => toggleMenu(name, e.currentTarget)}
+        >
+          {name}
+        </button>
       ))}
+      {openMenu && (
+        <MenuDropdown
+          key={openMenu.name}
+          items={MENUS[openMenu.name]}
+          anchorEl={openMenu.anchorEl}
+          onClose={closeMenu}
+        />
+      )}
     </div>
   )
 }

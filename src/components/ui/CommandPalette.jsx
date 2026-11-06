@@ -1,14 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import FileIcon from './FileIcon'
-
-const FILES = [
-    { name: 'home.tsx', path: 'src/home.tsx' },
-    { name: 'about.html', path: 'src/about.html' },
-    { name: 'projects.js', path: 'src/projects.js' },
-    { name: 'contact.css', path: 'src/contact.css' },
-    { name: 'resume.pdf', path: 'src/'},
-    { name: 'README.md', path: './README.md' }
-]
+import { FILES } from '../../files'
 
 export default function CommandPalette({ onFileOpen, onClose }) {
     const [query, setQuery] = useState('')
@@ -24,12 +16,9 @@ export default function CommandPalette({ onFileOpen, onClose }) {
     }, [])
 
     useEffect(() => {
-        setSelectedIndex(0)
-    }, [query])
-
-    useEffect(() => {
         function handleKeyDown(e) {
             if (e.key === 'Escape') onClose()
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') e.preventDefault()
             if (e.key === 'ArrowDown') setSelectedIndex(i => Math.min(i + 1, filtered.length - 1))
             if (e.key === 'ArrowUp') setSelectedIndex(i => Math.max(i - 1, 0))
             if (e.key === 'Enter' && filtered[selectedIndex]) {
@@ -58,10 +47,13 @@ export default function CommandPalette({ onFileOpen, onClose }) {
             {/* Palette */}
             <div style={{
                 position: 'fixed',
-                top: '80px',
+                top: 'min(80px, 10vh)',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                width: '560px',
+                width: 'min(560px, calc(100vw - 24px))',
+                maxHeight: 'calc(100dvh - 100px)',
+                display: 'flex',
+                flexDirection: 'column',
                 background: '#252526',
                 border: '1px solid var(--border)',
                 borderRadius: '8px',
@@ -82,8 +74,10 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                     <input
                         ref={inputRef}
                         value={query}
-                        onChange={e => setQuery(e.target.value)}
+                        onChange={e => { setQuery(e.target.value); setSelectedIndex(0) }}
                         placeholder="Go to file..."
+                        aria-label="Go to file"
+                        className="palette-input"
                         style={{
                             flex: 1,
                             background: 'transparent',
@@ -104,7 +98,7 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                 </div>
 
                 {/* Files section */}
-                <div style={{ padding: '6px 0' }}>
+                <div style={{ padding: '6px 0', overflowY: 'auto' }}>
                     <div style={{
                         fontSize: '11px',
                         color: 'var(--text-tertiary)',
@@ -116,6 +110,11 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                         Files
                     </div>
 
+                    {filtered.length === 0 && (
+                        <div style={{ padding: '6px 16px', fontSize: '13px', color: 'var(--text-tertiary)' }}>
+                            No matching files
+                        </div>
+                    )}
                     {filtered.map((file, i) => (
                         <div
                             key={file.name}
@@ -132,7 +131,7 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                                 borderLeft: i === selectedIndex ? '2px solid var(--accent)' : '2px solid transparent',
                             }}
                         >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
                                 <FileIcon filename={file.name} />
                                 <span style={{
                                     fontFamily: 'var(--font-mono)',
@@ -146,6 +145,9 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                                 fontSize: '11px',
                                 color: 'var(--text-tertiary)',
                                 fontFamily: 'var(--font-sans)',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
                             }}>
                                 {file.path}
                             </span>
@@ -154,7 +156,7 @@ export default function CommandPalette({ onFileOpen, onClose }) {
                 </div>
 
                 {/* Footer */}
-                <div style={{
+                <div className="palette-footer" style={{
                     display: 'flex',
                     gap: '16px',
                     padding: '6px 16px',

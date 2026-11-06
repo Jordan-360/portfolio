@@ -32,7 +32,7 @@ export default function MockTerminal({ onComplete }) {
     }, [onComplete])
 
     return (
-        <div style={{
+        <div onClick={onComplete} style={{
             position: 'fixed',
             inset: 0,
             background: 'rgba(0,0,0,0.85)',
@@ -42,7 +42,8 @@ export default function MockTerminal({ onComplete }) {
             justifyContent: 'center',
         }}>
             <div style={{
-                width: '520px',
+                width: 'min(520px, calc(100vw - 24px))',
+                overflowWrap: 'anywhere',
                 background: '#0c0c0c',
                 border: '1px solid var(--border)',
                 borderRadius: '6px',
