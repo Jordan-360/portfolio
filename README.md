@@ -40,7 +40,8 @@ src/
 │   ├── layout/       # TopBar, MenuBar, ActivityBar, Sidebar, TabBar, StatusBar
 │   ├── sections/      # Home, About, Projects, Contact, Resume, ReadMe
 │   └── ui/            # CommandPalette, MenuDropdown, FileIcon, HomeRunAnimation, MockTerminal
-├── styles/            # globals.css, ide.css, syntax.css
+├── styles/            # globals.css, ide.css (IDE chrome), sections.css (page content), syntax.css
+├── files.js           # the list of "files" shown in the explorer, palette and menus
 └── assets/            # icons, resume PDF, profile photo
 ```
 
@@ -53,7 +54,15 @@ npm install
 npm run dev
 ```
 
-The site will be available at `http://localhost:5173`.
+The site will be available at `http://localhost:5173`. Run `npm run lint` to check the code with ESLint.
+
+### Contact form
+
+By default the contact form opens the visitor's email app with the message filled in. To deliver messages straight to your inbox instead, create a form at [formspree.io](https://formspree.io) and set its ID as an environment variable (locally in `.env.local`, or in the Vercel project settings):
+
+```
+VITE_FORMSPREE_ID=your_form_id
+```
 
 ## 🥚 Easter Egg
 

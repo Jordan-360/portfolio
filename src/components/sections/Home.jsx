@@ -1,10 +1,9 @@
-﻿import { useState, useEffect } from 'react'
-import { VscFolder, VscPerson, VscMail, VscFile, VscGlobe } from 'react-icons/vsc'
+import { useState, useEffect } from 'react'
+import { VscFolder, VscPerson, VscMail, VscFile } from 'react-icons/vsc'
 import { SiGithub, SiGmail } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
-import profilePhoto from '../../assets/cropped phot.jpeg'
+import profilePhoto from '../../assets/profile-photo.jpeg'
 import resumePDF from '../../assets/resume.pdf'
-
 
 const ROLES = [
   'Building scalable frontend experiences 🖥️',
@@ -35,17 +34,19 @@ export default function Home({ onFileOpen }) {
         setDisplayed(current.slice(0, charIndex))
         setCharIndex(c => c - 1)
       }, 30)
-    } else if (deleting && charIndex < 0) {
-      setDeleting(false)
-      setRoleIndex(r => (r + 1) % ROLES.length)
-      setCharIndex(0)
+    } else {
+      timeout = setTimeout(() => {
+        setDeleting(false)
+        setRoleIndex(r => (r + 1) % ROLES.length)
+        setCharIndex(0)
+      }, 300)
     }
 
     return () => clearTimeout(timeout)
   }, [charIndex, deleting, roleIndex])
 
   return (
-    <div style={{ maxWidth: '860px', padding: '48px 0' }}>
+    <div className="page">
 
       {/* Comment header */}
       <div className="comment-block" style={{ marginBottom: '32px', fontSize: '13px' }}>
@@ -152,49 +153,13 @@ export default function Home({ onFileOpen }) {
 
       {/* CTA Buttons */}
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '48px' }}>
-        <button onClick={() => onFileOpen('projects.js')} style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          padding: '10px 20px',
-          background: 'transparent',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--border)',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-        }}>
+        <button className="btn-outline" onClick={() => onFileOpen('projects.js')}>
           <VscFolder style={{ color: '#fffb01f1' }} /> Projects
         </button>
-        <button onClick={() => onFileOpen('about.html')} style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          padding: '10px 20px',
-          background: 'transparent',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--border)',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-        }}>
+        <button className="btn-outline" onClick={() => onFileOpen('about.html')}>
           <VscPerson style={{ color: 'var(--syntax-purple)' }} /> About Me
         </button>
-        <button onClick={() => onFileOpen('contact.css')} style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          padding: '10px 20px',
-          background: 'transparent',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--border)',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-        }}>
+        <button className="btn-outline" onClick={() => onFileOpen('contact.css')}>
           <VscMail style={{ color: 'var(--text-secondary)' }} /> Contact
         </button>
       </div>
@@ -207,41 +172,19 @@ export default function Home({ onFileOpen }) {
           { label: 'Resume',   href: resumePDF,                               icon: <VscFile />,   color: '#4fc3f7' },
           { label: 'Gmail',    href: 'mailto:jordanwood159@gmail.com',        icon: <SiGmail />,   color: '#EA4335' },
         ].map(link => (
-          
-            <a
+          <a
             key={link.label}
+            className="social-pill"
             href={link.href}
             target="_blank"
             rel="noreferrer"
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '13px',
-              color: 'var(--text-secondary)',
-              textDecoration: 'none',
-              border: `1px solid ${link.color}`,
-              padding: '6px 14px',
-              borderRadius: '4px',
-              transition: 'color 0.15s, border-color 0.15s, background 0.15s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              lineHeight: 1
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.color = link.color
-              e.currentTarget.style.background = `${link.color}22`
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.color = 'var(--text-secondary)'
-              e.currentTarget.style.background = 'transparent'
-            }}
+            style={{ '--link-color': link.color }}
           >
-            <span style={{ color: link.color }}>{link.icon}</span>
+            <span className="social-pill__icon">{link.icon}</span>
             {link.label}
           </a>
         ))}
       </div>
-
     </div>
   )
 }

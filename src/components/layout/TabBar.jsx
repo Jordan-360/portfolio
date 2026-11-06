@@ -1,41 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useRef } from 'react'
 import FileIcon from '../ui/FileIcon'
+import { HOME_FILE } from '../../files'
 
 export default function TabBar({ tabs, activeTab, onTabClick, onTabClose }) {
-  const [hoveredClose, setHoveredClose] = useState(null)
+  const barRef = useRef(null)
+
+  // Keep the active tab visible when the tab bar overflows (common on mobile)
+  useEffect(() => {
+    barRef.current
+      ?.querySelector('.tabbar__tab--active')
+      ?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  }, [activeTab, tabs])
 
   return (
-    <div className="tabbar">
+    <div className="tabbar" ref={barRef} role="tablist">
       {tabs.map(tab => (
         <div
           key={tab}
+          role="tab"
+          aria-selected={activeTab === tab}
           className={`tabbar__tab ${activeTab === tab ? 'tabbar__tab--active' : ''}`}
           onClick={() => onTabClick(tab)}
         >
           <FileIcon filename={tab} />
           {tab}
-          <span
-            onMouseEnter={() => setHoveredClose(tab)}
-            onMouseLeave={() => setHoveredClose(null)}
-            onClick={(e) => onTabClose(tab, e)}
-            style={{
-              marginLeft: '6px',
-              fontSize: '16px',
-              opacity: hoveredClose === tab ? 1 : 0.3,
-              color: hoveredClose === tab ? 'var(--text-primary)' : 'var(--text-secondary)',
-              borderRadius: '3px',
-              padding: '0 2px',
-              border: hoveredClose === tab ? '1px solid var(--text-tertiary)' : '1px solid transparent',
-              background: hoveredClose === tab ? 'rgba(255,255,255,0.1)' : 'transparent',
-              transition: 'all 0.15s',
-              cursor: tab === 'home.tsx' ? 'default' : 'pointer',
-              width: '16px',
-              height: '16px',
-              lineHeight: .9
-            }}
-          >
-            ×
-          </span>
+          {tab !== HOME_FILE && (
+            <button
+              type="button"
+              className="tabbar__close"
+              aria-label={`Close ${tab}`}
+              onClick={e => {
+                e.stopPropagation()
+                onTabClose(tab)
+              }}
+            >
+              ×
+            </button>
+          )}
         </div>
       ))}
     </div>

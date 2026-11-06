@@ -1,93 +1,85 @@
 import { useState, useEffect } from 'react'
 import marinersLogo from '../../assets/mariners-logo.svg'
 
-export default function ReadMe() {
-  const [mariners, setMariners] = useState(null)
+const MARINERS_ID = 136
+const AL_LEAGUE_ID = 103
+
+const GAMES = [
+  { game: 'Overwatch 2', color: '#f99e1a' },
+  { game: 'Valorant', color: '#ff4655' },
+  { game: 'Call of Duty', color: '#00bd00' },
+  { game: 'Counter-Strike 2', color: '#06acf8' },
+  { game: 'Halo', color: '#d3eb00' },
+  { game: 'ARC Raiders', color: '#b406f8' },
+]
+
+const FUN_FACTS = [
+  { icon: '🎮', text: 'FPS gaming enthusiast — Overwatch is my main, but can catch me in Valorant, Counter-Strike, or Call of Duty as well. This is genuinely where my love for software started.' },
+  { icon: '🧱', text: 'I love tinkering and building things by hand. Right now that means LEGO sets, but I\'ve always been into taking apart and rebuilding anything I can get my hands on.' },
+  { icon: '⚾', text: 'Baseball shaped a huge part of who I am — the discipline and teamwork I learned on the field still show up in how I approach engineering today.' },
+  { icon: '🤖', text: 'Currently deep diving into AI and how LLMs actually work under the hood, while sharpening my frontend skills with new frameworks and libraries.' },
+]
+
+const CODE_VALUES = [
+  'Clean, readable code over clever code',
+  'Asking questions early instead of guessing late',
+  'Code that someone else can maintain without me',
+  'Solving the right problem, not just any problem',
+]
+
+async function fetchMarinersRecord(season) {
+  const res = await fetch(`https://statsapi.mlb.com/api/v1/standings?leagueId=${AL_LEAGUE_ID}&season=${season}`)
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const data = await res.json()
+  return data.records?.flatMap(r => r.teamRecords).find(t => t.team.id === MARINERS_ID) ?? null
+}
+
+function useMarinersRecord() {
+  const [state, setState] = useState({ record: null, season: null, error: false })
 
   useEffect(() => {
-    fetch('https://statsapi.mlb.com/api/v1/teams/136?hydrate=standings')
-      .then(res => res.json())
-      .then(data => {
-        const team = data.teams?.[0]
-        if (team) {
-          fetch(`https://statsapi.mlb.com/api/v1/standings?leagueId=103&season=2026`)
-            .then(res => res.json())
-            .then(standingsData => {
-              const allTeams = standingsData.records.flatMap(r => r.teamRecords)
-              const marinersRecord = allTeams.find(t => t.team.id === 136)
-              setMariners(marinersRecord)
-            })
-        }
-      })
-      .catch(err => console.error('MLB API error:', err))
-  }, [])
-  return (
+    let cancelled = false
+    const year = new Date().getFullYear()
 
-    <div style={{ maxWidth: '860px', padding: '48px 0' }}>
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// README.md - the rest of the story"}
-      </div>
-      {/* Header */}
-      <div style={{ marginBottom: '32px' }}>
-        <h1 style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: '36px',
-          letterSpacing: '0.1em',
-          fontWeight: 800,
-          color: 'var(--text-white)',
-          marginBottom: '8px',
-        }}>
-          Beyond the Resume
-        </h1>
-        <div style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          color: 'var(--text-secondary)',
-          marginBottom: '40px',
-        }}>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            color: 'var(--syntax-comment)',
-            fontStyle: 'italic',
-            marginBottom: '32px',
-          }}>
-            {"// hobbies · passions · interests"}
-          </div>
-        </div>
-      </div>
+    // Before Opening Day the current season has no standings yet,
+    // so fall back to last season's final record.
+    fetchMarinersRecord(year)
+      .then(record => record ? { record, season: year } : fetchMarinersRecord(year - 1).then(r => ({ record: r, season: year - 1 })))
+      .then(({ record, season }) => {
+        if (!cancelled) setState({ record, season, error: !record })
+      })
+      .catch(() => {
+        if (!cancelled) setState({ record: null, season: null, error: true })
+      })
+
+    return () => { cancelled = true }
+  }, [])
+
+  return state
+}
+
+function Stat({ value, label }) {
+  return (
+    <div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '20px', fontWeight: 700, color: '#fff' }}>{value}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#C4CED4' }}>{label}</div>
+    </div>
+  )
+}
+
+export default function ReadMe() {
+  const { record: mariners, season, error } = useMarinersRecord()
+
+  return (
+    <div className="page">
+      <div className="page-comment">{"// README.md - the rest of the story"}</div>
+      <h1 className="page-title">Beyond the Resume</h1>
+      <div className="page-subtitle">{"// hobbies · passions · interests"}</div>
 
       {/* Extended Story */}
-      <div style={{
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
-        fontFamily: 'var(--font-mono)',
-        fontSize: '14px',
-        lineHeight: '1.8',
-        color: 'var(--text-secondary)',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: 'var(--accent)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          marginBottom: '20px',
-        }}>
-          ## My Story
-        </h2>
-
-        Here's the full updated version with your new paragraphs formatted to match the existing style:
-        jsx        {'I grew up in '}
+      <div className="card prose">
+        <h2 className="card__heading">## My Story</h2>
+        {'I grew up in '}
         <span style={{ color: 'var(--syntax-orange)' }}>Centralia, Washington</span>
         {' — a small town you could drive through in a few minutes. Raised by my dad alongside my three siblings, '}
         <span style={{ color: 'var(--syntax-green)', fontWeight: 600 }}>baseball</span>
@@ -117,81 +109,31 @@ export default function ReadMe() {
       </div>
 
       {/* Mariners Card */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// who I root for"}
-      </div>
-      <div style={{
+      <div className="page-comment">{"// who I root for"}</div>
+      <div className="card" style={{
         border: '2px solid #0C2C56',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
         background: 'linear-gradient(135deg, #0C2C56 0%, #1a1a1a 100%)',
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px', marginBottom: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img
-              src={marinersLogo}
-              alt="Seattle Mariners logo"
-              style={{ width: '23px', height: '23px' }}
-            />
-            <h2 style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: '#C4CED4',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              margin: 0,
-            }}>
-              Seattle Mariners
-            </h2>
+            <img src={marinersLogo} alt="Seattle Mariners logo" style={{ width: '23px', height: '23px' }} />
+            <h2 className="card__heading" style={{ color: '#C4CED4', margin: 0 }}>Seattle Mariners</h2>
           </div>
-          <span style={{ fontSize: '11px', color: '#016cf8', padding: '2px 8px', borderRadius: '4px', fontWeight: 700 }}>
+          <span style={{ fontSize: '11px', color: '#016cf8', fontWeight: 700 }}>
             #TRIDENTS UP🔱
           </span>
         </div>
 
         {mariners ? (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '16px',
-            textAlign: 'center',
-          }}>
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '20px', fontWeight: 700, color: '#fff' }}>
-                {mariners.wins}-{mariners.losses}
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#C4CED4' }}>RECORD</div>
-            </div>
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '20px', fontWeight: 700, color: '#fff' }}>
-                {mariners.divisionRank}
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#C4CED4' }}>AL WEST RANK</div>
-            </div>
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '20px', fontWeight: 700, color: '#fff' }}>
-                {mariners.gamesBack === '-' ? '0' : mariners.gamesBack}
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#C4CED4' }}>GAMES BACK</div>
-            </div>
-            <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '20px', fontWeight: 700, color: '#fff' }}>
-                {mariners.winningPercentage}
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#C4CED4' }}>WIN %</div>
-            </div>
+          <div className="mariners-stats">
+            <Stat value={`${mariners.wins}-${mariners.losses}`} label={`${season} RECORD`} />
+            <Stat value={mariners.divisionRank} label="AL WEST RANK" />
+            <Stat value={mariners.gamesBack === '-' ? '0' : mariners.gamesBack} label="GAMES BACK" />
+            <Stat value={mariners.winningPercentage} label="WIN %" />
           </div>
         ) : (
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: '#C4CED4' }}>
-            Loading live stats...
+            {error ? 'Live stats are unavailable right now, check back later.' : 'Loading live stats...'}
           </div>
         )}
 
@@ -207,95 +149,35 @@ export default function ReadMe() {
       </div>
 
       {/* Gaming Loadout */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// how I unwind"}
-      </div>
-      <div style={{
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: 'var(--syntax-purple)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          marginBottom: '20px',
-        }}>
-          🎮 Games I Enjoy
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-          {[
-            { game: 'Overwatch 2', color: '#f99e1a' },
-            { game: 'Valorant', color: '#ff4655' },
-            { game: 'Call of Duty', color: '#00bd00' },
-            { game: 'Counter-Strike 2', color: '#06acf8' },
-            { game: 'Halo', color: '#d3eb00' },
-            { game: 'ARC Raiders', color: '#b406f8' },
-
-          ].map((g, i) => (
-            <div key={i} style={{
+      <div className="page-comment">{"// how I unwind"}</div>
+      <div className="card">
+        <h2 className="card__heading" style={{ color: 'var(--syntax-purple)' }}>🎮 Games I Enjoy</h2>
+        <div className="games-grid">
+          {GAMES.map(g => (
+            <div key={g.game} style={{
               border: `1px solid ${g.color}`,
               borderRadius: '6px',
               padding: '14px',
               textAlign: 'center',
               background: `${g.color}11`,
+              fontFamily: 'var(--font-mono)',
+              fontSize: '13px',
+              fontWeight: 700,
+              color: g.color,
             }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 700, color: g.color, marginBottom: '4px' }}>
-                {g.game}
-              </div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-secondary)' }}>
-                {g.role}
-              </div>
+              {g.game}
             </div>
           ))}
         </div>
       </div>
 
       {/* Fun Facts */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// interesting facts"}
-      </div>
-      <div style={{
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: 'var(--accent)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          marginBottom: '20px',
-        }}>
-          ## Fun Facts
-        </h2>
+      <div className="page-comment">{"// interesting facts"}</div>
+      <div className="card">
+        <h2 className="card__heading">## Fun Facts</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          {[
-            { icon: '🎮', text: 'FPS gaming enthusiast — Overwatch is my main, but can catch me in Valorant, Counter-Strike, or Call of Duty as well. This is genuinely where my love for software started.' },
-            { icon: '🧱', text: 'I love tinkering and building things by hand. Right now that means LEGO sets, but I\'ve always been into taking apart and rebuilding anything I can get my hands on.' },
-            { icon: '⚾', text: 'Baseball shaped a huge part of who I am — the discipline and teamwork I learned on the field still show up in how I approach engineering today.' },
-            { icon: '🤖', text: 'Currently deep diving into AI and how LLMs actually work under the hood, while sharpening my frontend skills with new frameworks and libraries.' },
-          ].map((fact, i) => (
-            <div key={i} style={{
+          {FUN_FACTS.map(fact => (
+            <div key={fact.icon} style={{
               display: 'flex',
               gap: '12px',
               fontFamily: 'var(--font-mono)',
@@ -310,66 +192,20 @@ export default function ReadMe() {
         </div>
       </div>
 
-      {/* What I'm Playing / Learning */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// what keeps me busy"}
-      </div>
-      <div style={{
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: '24px',
-      }}>
+      {/* What keeps me busy */}
+      <div className="page-comment">{"// what keeps me busy"}</div>
+      <div className="card two-col">
         <div>
-          <h2 style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: 'var(--syntax-purple)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: '12px',
-          }}>
-            🛠️ Hobbies
-          </h2>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            color: 'var(--text-secondary)',
-            lineHeight: '1.7',
-          }}>
+          <h2 className="card__heading" style={{ color: 'var(--syntax-purple)', marginBottom: '12px' }}>🛠️ Hobbies</h2>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
             Building LEGO sets<br />
             Tinkering with electronics<br />
             FPS Games
           </div>
         </div>
         <div>
-          <h2 style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: 'var(--syntax-green)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: '12px',
-          }}>
-            📚 Currently Learning
-          </h2>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            color: 'var(--text-secondary)',
-            lineHeight: '1.7',
-          }}>
+          <h2 className="card__heading" style={{ color: 'var(--syntax-green)', marginBottom: '12px' }}>📚 Currently Learning</h2>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: '1.7' }}>
             How LLMs work under the hood<br />
             New frontend frameworks & libraries
           </div>
@@ -377,47 +213,13 @@ export default function ReadMe() {
       </div>
 
       {/* Coding Philosophy */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// how I think about writing code"}
-      </div>
-      <div style={{
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: 'var(--accent)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          marginBottom: '20px',
-        }}>
-          ## What I Value In Code
-        </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {[
-            'Clean, readable code over clever code',
-            'Asking questions early instead of guessing late',
-            'Code that someone else can maintain without me',
-            'Solving the right problem, not just any problem',
-          ].map((value, i) => (
-            <div key={i} style={{
-              display: 'flex',
-              gap: '10px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '13px',
-              color: 'var(--text-secondary)',
-            }}>
-              <span style={{ color: 'var(--accent)' }}>▸</span>
+      <div className="page-comment">{"// how I think about writing code"}</div>
+      <div className="card">
+        <h2 className="card__heading">## What I Value In Code</h2>
+        <div className="bullet-list" style={{ gap: '10px', marginBottom: 0 }}>
+          {CODE_VALUES.map(value => (
+            <div key={value} className="bullet">
+              <span className="bullet__marker">▸</span>
               <span>{value}</span>
             </div>
           ))}
@@ -425,38 +227,10 @@ export default function ReadMe() {
       </div>
 
       {/* How this site was built */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {"// peeking behind the curtain"}
-      </div>
-      <div style={{
-        border: '1px solid var(--border)',
-        borderRadius: '8px',
-        padding: '24px',
-        marginBottom: '32px',
-      }}>
-        <h2 style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          fontWeight: 600,
-          color: 'var(--accent)',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          marginBottom: '20px',
-        }}>
-          ## How This Site Was Built
-        </h2>
-        <div style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '13px',
-          color: 'var(--text-secondary)',
-          lineHeight: '1.8',
-        }}>
+      <div className="page-comment">{"// peeking behind the curtain"}</div>
+      <div className="card">
+        <h2 className="card__heading">## How This Site Was Built</h2>
+        <div className="prose" style={{ fontSize: '13px' }}>
           This entire portfolio is built to look and feel like a real VS Code window, right down to the activity bar, tab switching, command palette, and status bar. Built with{' '}
           <span style={{ color: 'var(--accent)' }}>React</span> and{' '}
           <span style={{ color: 'var(--accent)' }}>Vite</span>, deployed on{' '}
@@ -465,19 +239,11 @@ export default function ReadMe() {
       </div>
 
       {/* Footer */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        textAlign: 'center',
-        marginTop: '48px',
-      }}>
+      <div className="page-comment" style={{ textAlign: 'center', marginTop: '48px', marginBottom: 0 }}>
         {'// thanks for reading — you found the secret file 🕵️'}
         <br />
         {"// try typing (↑ ↑ ↓ ↓ ← → ← → b a) or the Konami Code on your keyboard for a cool easter egg 🥚"}
       </div>
-
     </div>
   )
 }

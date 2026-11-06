@@ -1,7 +1,12 @@
-﻿import { SiGithub, SiGmail, SiLeetcode } from 'react-icons/si'
-import { VscMail, VscGlobe } from 'react-icons/vsc'
-import { useState } from 'react'
+﻿import { useState } from 'react'
+import { SiGithub, SiGmail, SiLeetcode } from 'react-icons/si'
 import { FaLinkedin } from 'react-icons/fa'
+
+const EMAIL = 'jordanwood159@gmail.com'
+
+// Set VITE_FORMSPREE_ID (e.g. in Vercel env vars) to deliver messages through
+// Formspree. Without it, the form falls back to opening the visitor's email app.
+const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID
 
 const SOCIALS = [
   {
@@ -36,139 +41,82 @@ const SOCIALS = [
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [status, setStatus] = useState('idle') // idle | sending | sent | error
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const inputStyle = {
-    width: '100%',
-    background: 'var(--bg-tertiary)',
-    border: '1px solid var(--border)',
-    borderRadius: '4px',
-    padding: '10px 14px',
-    color: 'var(--text-primary)',
-    fontFamily: 'var(--font-mono)',
-    fontSize: '13px',
-    outline: 'none',
-    boxSizing: 'border-box',
+  async function handleSubmit(e) {
+    e.preventDefault()
+
+    if (!FORMSPREE_ID) {
+      const subject = form.subject || `Portfolio message from ${form.name}`
+      const body = `${form.message}\n\n— ${form.name} (${form.email})`
+      window.location.href =
+        `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      return
+    }
+
+    setStatus('sending')
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setStatus('sent')
+      setForm({ name: '', email: '', subject: '', message: '' })
+    } catch {
+      setStatus('error')
+    }
   }
 
-  const labelStyle = {
-    fontFamily: 'var(--font-mono)',
-    fontSize: '12px',
-    color: 'var(--text-secondary)',
-    marginBottom: '6px',
-    display: 'block',
-    letterSpacing: '0.08em',
-  }
+  const statusMessage = {
+    idle: FORMSPREE_ID ? '// lands directly in my inbox' : '// opens your email app with the message ready to send',
+    sending: '// sending…',
+    sent: '// message sent, thanks! I\'ll get back to you soon',
+    error: `// something went wrong, email me directly at ${EMAIL}`,
+  }[status]
 
   return (
-    <div style={{ maxWidth: '960px', padding: '48px 0' }}>
+    <div className="page page--wide">
+      <div className="page-comment">{'// contact.css — let\'s build something'}</div>
+      <h1 className="page-title">Contact</h1>
+      <div className="page-subtitle">{'// open to opportunities, ideas, & collaborations'}</div>
 
-      {/* Comment header */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {'// contact.css — let\'s build something '}
-      </div>
-
-      {/* Heading */}
-      <h1 style={{
-       fontFamily: 'var(--font-heading)',
-      fontSize: '36px',
-      letterSpacing: '0.1em',
-      fontWeight: 800,
-      color: 'var(--text-white)',
-      marginBottom: '8px',
-      }}>
-        Contact
-      </h1>
-
-      {/* Subtitle */}
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--text-secondary)',
-        marginBottom: '40px',
-      }}>
-        <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--syntax-comment)',
-        fontStyle: 'italic',
-        marginBottom: '32px',
-      }}>
-        {'// open to opportunities, ideas, & collaborations'}
-      </div>
-      </div>
-
-      {/* Two column layout */}
-      <div className="contact-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
+      <div className="contact-layout">
 
         {/* Left — Find Me On */}
         <div>
-          <h2 style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: 'var(--accent)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: '20px',
-          }}>
-            Find Me On
-          </h2>
-
+          <h2 className="card__heading">Find Me On</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {SOCIALS.map(social => (
-                <a
+              <a
                 key={social.label}
+                className="social-card"
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '16px',
-                  padding: '16px',
-                  border: '1px solid var(--border)',
-                  borderRadius: '8px',
-                  textDecoration: 'none',
-                  background: 'var(--bg-secondary)',
-                  transition: 'border-color 0.15s, background 0.15s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = social.color
-                  e.currentTarget.style.background = `${social.color}11`
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'var(--border)'
-                  e.currentTarget.style.background = 'var(--bg-secondary)'
-                }}
+                style={{ '--link-color': social.color }}
               >
                 <span style={{
                   color: social.color,
                   fontSize: '20px',
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   flexShrink: 0,
                   width: '36px',
                   height: '36px',
                   background: 'var(--bg-tertiary)',
                   borderRadius: '6px',
-                  justifyContent: 'center',
                 }}>
                   {social.icon}
                 </span>
-                <div>
+                <div className="social-card__text">
                   <div style={{
-                    fontFamily: 'var(--font-mono)',
                     fontSize: '11px',
                     fontWeight: 600,
                     color: social.color,
@@ -177,19 +125,9 @@ export default function Contact() {
                   }}>
                     {social.label}
                   </div>
-                  <div style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '12px',
-                    color: 'var(--text-secondary)',
-                  }}>
-                    {social.value}
-                  </div>
+                  <div className="social-card__value">{social.value}</div>
                 </div>
-                <span style={{
-                  marginLeft: 'auto',
-                  color: 'var(--text-tertiary)',
-                  fontSize: '16px',
-                }}>
+                <span style={{ marginLeft: 'auto', color: 'var(--text-tertiary)', fontSize: '16px' }}>
                   ↗
                 </span>
               </a>
@@ -199,101 +137,44 @@ export default function Contact() {
 
         {/* Right — Send A Message */}
         <div>
-          <h2 style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '13px',
-            fontWeight: 600,
-            color: 'var(--accent)',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginBottom: '20px',
-          }}>
-            Send A Message
-          </h2>
-
-          <form
-            action="https://formspree.io/f/YOUR_FORM_ID"
-            method="POST"
-            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-          >
-            <div>
-              <label style={labelStyle}>{'// YOUR_NAME '}
-              <span style={{ color: 'var(--syntax-red)' }}>*</span>
+          <h2 className="card__heading">Send A Message</h2>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="form-field">
+              <label htmlFor="contact-name">
+                {'// YOUR_NAME '}<span style={{ color: 'var(--syntax-red)' }}>*</span>
               </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-              />
+              <input id="contact-name" className="form-input" type="text" name="name" placeholder="name"
+                autoComplete="name" value={form.name} onChange={handleChange} required />
             </div>
-            <div>
-              <label style={labelStyle}>{'// YOUR_EMAIL '}
-              <span style={{ color: 'var(--syntax-red)' }}>*</span>
+            <div className="form-field">
+              <label htmlFor="contact-email">
+                {'// YOUR_EMAIL '}<span style={{ color: 'var(--syntax-red)' }}>*</span>
               </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                style={inputStyle}
-              />
+              <input id="contact-email" className="form-input" type="email" name="email" placeholder="email"
+                autoComplete="email" value={form.email} onChange={handleChange} required />
             </div>
-            <div>
-              <label style={labelStyle}>{'// SUBJECT '}</label>
-              <input
-                type="text"
-                name="subject"
-                placeholder="subject"
-                value={form.subject}
-                onChange={handleChange}
-                style={inputStyle}
-              />
+            <div className="form-field">
+              <label htmlFor="contact-subject">{'// SUBJECT'}</label>
+              <input id="contact-subject" className="form-input" type="text" name="subject" placeholder="subject"
+                value={form.subject} onChange={handleChange} />
             </div>
-            <div>
-              <label style={labelStyle}>{'// MESSAGE '}
-              <span style={{ color: 'var(--syntax-red)' }}>*</span>
+            <div className="form-field">
+              <label htmlFor="contact-message">
+                {'// MESSAGE '}<span style={{ color: 'var(--syntax-red)' }}>*</span>
               </label>
-              <textarea
-                name="message"
-                placeholder="your message"
-                value={form.message}
-                onChange={handleChange}
-                required
-                rows={6}
-                style={{ ...inputStyle, resize: 'vertical' }}
-              />
+              <textarea id="contact-message" className="form-input" name="message" placeholder="your message"
+                rows={6} value={form.message} onChange={handleChange} required style={{ resize: 'vertical' }} />
             </div>
-            <button
-              type="submit"
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '14px',
-                fontWeight: 600,
-                padding: '12px 24px',
-                background: 'var(--accent)',
-                color: '#000',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                transition: 'opacity 0.15s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              Send Message 
+            <button type="submit" className="btn-primary" disabled={status === 'sending'}
+              style={{ fontSize: '14px', padding: '12px 24px' }}>
+              {status === 'sending' ? 'Sending…' : 'Send Message'}
             </button>
             <div style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '11px',
-              color: 'var(--text-tertiary)',
+              color: status === 'error' ? 'var(--syntax-red)' : 'var(--text-tertiary)',
             }}>
-              {'// lands directly in my inbox'}
+              {statusMessage}
             </div>
           </form>
         </div>

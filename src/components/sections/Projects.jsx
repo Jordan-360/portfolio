@@ -77,7 +77,7 @@ const PROJECTS = [
         categories: ['REACT', 'VITE', 'PORTFOLIO'],
         title: 'VS Code Portfolio',
         description: 'This portfolio — built from scratch as a fully interactive VS Code IDE experience. Features a command palette, tab switching, sidebar navigation, activity bar, and status bar, all built in React with Vite and deployed on Vercel.',
-        tags: ['React', 'Vite', 'JavaScript', 'CSS', 'Framer Motion'],
+        tags: ['React', 'Vite', 'JavaScript', 'CSS'],
         github: 'https://github.com/Jordan-360/portfolio',
         live: null,
         color: '#4ec9b0',
@@ -102,214 +102,50 @@ const PROJECTS = [
         live: null,
         color: '#c586c0',
     },
-    
 ]
 
 export default function Projects() {
     return (
-        <div style={{ maxWidth: '960px', padding: '48px 0' }}>
+        <div className="page page--wide">
+            <div className="page-comment">{'// projects.js - things I\'ve built'}</div>
+            <h1 className="page-title">Projects</h1>
+            <div className="page-subtitle">{"// what I've built · what I've learned · what I'm proud of"}</div>
 
-            {/* Comment header */}
-            <div style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '13px',
-                color: 'var(--syntax-comment)',
-                fontStyle: 'italic',
-                marginBottom: '32px',
-            }}>
-                {'// projects.js - things I\'ve built'}
-            </div>
-
-            {/* Heading */}
-            <h1 style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: '36px',
-                letterSpacing: '0.1em',
-                fontWeight: 800,
-                color: 'var(--text-white)',
-                marginBottom: '8px',
-            }}>
-                Projects
-            </h1>
-
-
-            <div style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '13px',
-                color: 'var(--text-secondary)',
-                marginBottom: '40px',
-            }}>
-                <div style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '13px',
-                    color: 'var(--syntax-comment)',
-                    fontStyle: 'italic',
-                    marginBottom: '32px',
-                }}>
-                    {"// what I've built · what I've learned · what I'm proud of"}
-                </div>
-            </div>
-
-            {/* Grid */}
-            <div className="projects-grid" style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '16px',
-            }}>
-                {PROJECTS.map((project, i) => (
+            <div className="projects-grid">
+                {PROJECTS.map(project => (
                     <div
-                        key={i}
-                        style={{
-                            border: '1px solid var(--border)',
-                            borderRadius: '8px',
-                            overflow: 'hidden',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            background: 'var(--bg-secondary)',
-                            transition: 'transform 0.2s, box-shadow 0.2s',
-                            cursor: 'default',
-                        }}
-                        onMouseEnter={e => {
-                            e.currentTarget.style.transform = 'translateY(-4px)'
-                            e.currentTarget.style.boxShadow = `0 8px 24px ${project.color}30`
-                            e.currentTarget.querySelector('.top-bar').style.width = '100%'
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.transform = 'translateY(0)'
-                            e.currentTarget.style.boxShadow = 'none'
-                            e.currentTarget.querySelector('.top-bar').style.width = '0%'
-                        }}
+                        key={project.title}
+                        className="project-card"
+                        style={{ '--project-color': project.color }}
                     >
-                        {/* Animated top border */}
-                        <div
-                            className="top-bar"
-                            style={{
-                                height: '2px',
-                                width: '0%',
-                                background: project.color,
-                                transition: 'width 0.3s ease',
-                                flexShrink: 0,
-                            }}
-                        />
+                        <div className="project-card__bar" />
 
-                        {/* Card content */}
-                        <div style={{
-                            padding: '24px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '12px',
-                            flex: 1,
-                        }}>
-                            {/* Top row — emoji + categories + github */}
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div className="project-card__body">
+                            <div className="project-card__top">
+                                <div className="project-card__meta">
                                     <span style={{ fontSize: '24px' }}>{project.emoji}</span>
-                                    <div style={{
-                                        fontFamily: 'var(--font-mono)',
-                                        fontSize: '11px',
-                                        color: project.color,
-                                        letterSpacing: '0.1em',
-                                    }}>
+                                    <div className="project-card__categories">
                                         {project.categories.join(' · ')}
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', gap: '8px' }}>
-                                    <a
-                                        href={project.github}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        style={{
-                                            fontFamily: 'var(--font-mono)',
-                                            fontSize: '12px',
-                                            color: 'var(--text-secondary)',
-                                            textDecoration: 'none',
-                                            border: '1px solid var(--border)',
-                                            borderRadius: '4px',
-                                            padding: '3px 10px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '6px',
-                                            transition: 'color 0.15s, border-color 0.15s',
-                                        }}
-                                        onMouseEnter={e => {
-                                            e.currentTarget.style.color = project.color
-                                            e.currentTarget.style.borderColor = project.color
-                                        }}
-                                        onMouseLeave={e => {
-                                            e.currentTarget.style.color = 'var(--text-secondary)'
-                                            e.currentTarget.style.borderColor = 'var(--border)'
-                                        }}
-                                    >
+                                <div className="project-card__links">
+                                    <a className="project-card__link" href={project.github} target="_blank" rel="noreferrer">
                                         <SiGithub /> GitHub
                                     </a>
                                     {project.live && (
-                                        <a
-                                            href={project.live}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            style={{
-                                                fontFamily: 'var(--font-mono)',
-                                                fontSize: '12px',
-                                                color: 'var(--text-secondary)',
-                                                textDecoration: 'none',
-                                                border: '1px solid var(--border)',
-                                                borderRadius: '4px',
-                                                padding: '3px 10px',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '6px',
-                                            }}
-                                            onMouseEnter={e => {
-                                            e.currentTarget.style.color = project.color
-                                            e.currentTarget.style.borderColor = project.color
-                                        }}
-                                        onMouseLeave={e => {
-                                            e.currentTarget.style.color = 'var(--text-secondary)'
-                                            e.currentTarget.style.borderColor = 'var(--border)'
-                                        }}
-                                        >
+                                        <a className="project-card__link" href={project.live} target="_blank" rel="noreferrer">
                                             Live Demo
                                         </a>
                                     )}
                                 </div>
                             </div>
 
-                            {/* Title */}
-                            <div style={{
-                                fontFamily: 'var(--font-mono)',
-                                fontSize: '16px',
-                                fontWeight: 700,
-                                color: 'var(--text-white)',
-                                lineHeight: '1.3',
-                            }}>
-                                {project.title}
-                            </div>
+                            <div className="project-card__title">{project.title}</div>
+                            <div className="project-card__desc">{project.description}</div>
 
-                            {/* Description */}
-                            <div style={{
-                                fontFamily: 'var(--font-mono)',
-                                fontSize: '13px',
-                                color: 'var(--text-secondary)',
-                                lineHeight: '1.7',
-                                flex: 1,
-                            }}>
-                                {project.description}
-                            </div>
-
-                            {/* Tags */}
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: 'auto' }}>
+                            <div className="tag-list" style={{ gap: '6px', marginTop: 'auto' }}>
                                 {project.tags.map(tag => (
-                                    <span key={tag} style={{
-                                        fontFamily: 'var(--font-mono)',
-                                        fontSize: '11px',
-                                        color: 'var(--text-secondary)',
-                                        background: 'var(--bg-tertiary)',
-                                        border: '1px solid var(--border)',
-                                        borderRadius: '4px',
-                                        padding: '2px 8px',
-                                    }}>
-                                        {tag}
-                                    </span>
+                                    <span key={tag} className="chip chip--small">{tag}</span>
                                 ))}
                             </div>
                         </div>

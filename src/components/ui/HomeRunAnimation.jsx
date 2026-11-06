@@ -53,6 +53,14 @@ function generateFireworks() {
   }))
 }
 
+// The scene is drawn at a fixed 440px-wide pixel size; shrink it to fit small screens.
+const SCENE_WIDTH = 444
+const SCENE_HEIGHT = 400
+
+function getSceneScale() {
+  return Math.min(1, (window.innerWidth - 16) / SCENE_WIDTH, (window.innerHeight - 16) / SCENE_HEIGHT)
+}
+
 // Diamond (overhead, slight perspective tilt — home near bottom, CF at top)
 // Home:(220,258)  3rd:(132,197)  2nd:(220,136)  1st:(308,197)  Mound:(220,197)
 // Outfield wall arc: (44,115)→(118,60)→(220,42)→(322,60)→(396,115)
@@ -61,6 +69,13 @@ function generateFireworks() {
 export default function HomeRunAnimation({ onComplete }) {
   const [phase, setPhase] = useState(0)
   const [fireworks, setFireworks] = useState([])
+  const [scale, setScale] = useState(getSceneScale)
+
+  useEffect(() => {
+    const onResize = () => setScale(getSceneScale())
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   useEffect(() => {
     const t = [
@@ -83,12 +98,20 @@ export default function HomeRunAnimation({ onComplete }) {
       phase === 4 ? 'left 1.05s ease-out, top 0.9s ease-out' : 'none'
 
   return (
-    <div style={{
-      position: 'fixed', inset: 0, background: C.black,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      flexDirection: 'column', fontFamily: 'monospace',
-      zIndex: 9999, overflow: 'hidden',
-    }}>
+    <div
+      onClick={onComplete}
+      title="Tap to skip"
+      style={{
+        position: 'fixed', inset: 0, background: C.black,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontFamily: 'monospace',
+        zIndex: 9999, overflow: 'hidden',
+      }}
+    >
+      <div style={{
+        display: 'flex', alignItems: 'center', flexDirection: 'column',
+        transform: `scale(${scale})`, flexShrink: 0,
+      }}>
 
       {/* Top scoreboard strip */}
       <div style={{
@@ -386,6 +409,8 @@ export default function HomeRunAnimation({ onComplete }) {
           </div>
         </>
       )}
+
+      </div>
 
       <style>{`
         @keyframes nesFlash {

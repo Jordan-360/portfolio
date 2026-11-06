@@ -1,68 +1,23 @@
-import { useState } from 'react'
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
 export default function TopBar({ onSearchClick }) {
-  const [hovered, setHovered] = useState(false)
-
   return (
     <div className="titlebar">
-      <div
-        className="titlebar__dots"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <div className="titlebar__dot titlebar__dot--red" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', color: '#000', fontWeight: 700, lineHeight: 2 }}>
-          {hovered ? '✕' : ''}
-        </div>
-        <div className="titlebar__dot titlebar__dot--yellow" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#000', fontWeight: 700, lineHeight: 1 }}>
-          {hovered ? '−' : ''}
-        </div>
-        <div className="titlebar__dot titlebar__dot--green" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#000', fontWeight: 700, lineHeight: 1 }}>
-          {hovered ? '+' : ''}
-        </div>
+      <div className="titlebar__dots" aria-hidden="true">
+        <div className="titlebar__dot titlebar__dot--red"><span>✕</span></div>
+        <div className="titlebar__dot titlebar__dot--yellow"><span>−</span></div>
+        <div className="titlebar__dot titlebar__dot--green"><span>+</span></div>
       </div>
 
-      <div
-        onClick={onSearchClick}
-        style={{
-          position: 'absolute',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          background: 'var(--bg-primary)',
-          border: '1px solid var(--border)',
-          borderRadius: '6px',
-          padding: '3px 12px',
-          minWidth: 'min(300px, 45vw)',
-          justifyContent: 'space-between',
-          cursor: 'pointer',
-        }}
-      >
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          fontSize: '12px',
-          color: 'var(--text-secondary)',
-          fontFamily: 'var(--font-sans)',
-        }}>
+      <button type="button" className="titlebar__search" onClick={onSearchClick} aria-label="Search files">
+        <span className="titlebar__search-label">
           <span>🔍</span>
-          <span>jordan-wood</span>
-          <span style={{ color: 'var(--text-tertiary)' }}>:</span>
+          <span className="titlebar__search-owner">jordan-wood</span>
+          <span className="titlebar__search-owner" style={{ color: 'var(--text-tertiary)' }}>:</span>
           <span style={{ color: 'var(--text-primary)' }}>portfolio</span>
-        </div>
-        <div className="titlebar__shortcut" style={{
-          fontSize: '11px',
-          color: 'var(--text-tertiary)',
-          fontFamily: 'var(--font-sans)',
-          background: 'var(--bg-tertiary)',
-          padding: '1px 6px',
-          borderRadius: '3px',
-        }}>
-          Ctrl C
-        </div>
-      </div>
+        </span>
+        <span className="titlebar__shortcut">{isMac ? '⌘ P' : 'Ctrl P'}</span>
+      </button>
     </div>
   )
 }
